@@ -1,6 +1,10 @@
 include_directories(
 	PRIVATE ./Base
 )
+# 添加对gdb的支持
+SET(CMAKE_BUILD_TYPE "Debug")
+SET(CMAKE_CXX_FLAGS_DEBUG "$ENV{CXXFLAGS} -O0 -Wall -g -ggdb")
+SET(CMAKE_CXX_FLAGS_RELEASE "$ENV{CXXFLAGS} -O3 -Wall")
 
 set (base_SRCS
 	 Net/EventLoopThreadPool.cpp
@@ -8,7 +12,8 @@ set (base_SRCS
 	 Net/EpollPoller.cpp
 	 Net/EventLoopThread.cpp
 	 Net/EpollPoller.hpp
-	 Net/CurrentThread.h
+	 Net/CurrentThread.hpp
+	 Net/CurrentThread.cpp
 	 Net/EventLoopThreadPool.hpp
 	 Net/Channel.cpp
 	 Net/Channel.hpp
@@ -16,6 +21,7 @@ set (base_SRCS
 	 Net/Poller.hpp
 	 Net/EventLoop.hpp
 	 Net/Poller.cpp
+	 Net/DefaultPoller.cpp
 	 Base/NonCopyable.hpp
 	 Base/Callbacks.hpp
 	 Base/Singleton.hpp
@@ -39,7 +45,7 @@ set (base_SRCS
 	 Socket/Accetpor.cpp
 	 Socket/SocketOps.cpp
 	 Log/Logger.cpp
-	 Log/BlockQueue.h
+	 Log/BlockQueue.hpp
 	 Log/Logger.hpp
 	 Timer/TimeStamp.cpp
 	 Timer/TimeStamp.hpp

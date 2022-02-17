@@ -21,7 +21,7 @@ const int k_poll_timeout = 10000;
 int CreateEventfd() {
     int event_fd = eventfd(0, EFD_NONBLOCK | EFD_CLOEXEC);
     if (event_fd < 0) {
-        LOG_ERROR("eventfd error: %d \n", errno);
+        LOG_WARN("eventfd error: %d \n", errno);
     }
     return event_fd;
 }
@@ -34,6 +34,7 @@ EventLoop::EventLoop() :
     poller_(Poller::new_deafultPoller(this)),
     wakeup_fd(CreateEventfd()),
     wakeup_channel_(new Channel(this, wakeup_fd)) {
+
     LOG_DEBUG("EventLoop created %p in thread %d \n", this, threadId_);
     if (t_loop_in_thisThread) {
         LOG_ERROR("Another EventLoop %p exists in this thread %d \n", this, threadId_);
@@ -57,7 +58,7 @@ void EventLoop::loop() {
     looping_ = true;
     quit_ = false;
 
-    LOG_ERROR("EventLoop %p start looping \n", this);
+    LOG_INFO("EventLoop %p start looping \n", this);
 
     while (!quit_) {
         active_channels.clear();
@@ -69,7 +70,7 @@ void EventLoop::loop() {
 
         do_pending_fucntor();
     }
-    LOG_ERROR("EventLoop %p stop looping ", this);
+    LOG_INFO("EventLoop %p stop looping ", this);
     looping_ = false;
 }
 

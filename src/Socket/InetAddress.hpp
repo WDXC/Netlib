@@ -1,10 +1,10 @@
 /*** 
  * @Author: Zty
  * @Date: 2022-02-14 14:08:34
- * @LastEditTime: 2022-02-15 18:59:32
+ * @LastEditTime: 2022-02-16 19:52:02
  * @LastEditors: Zty
  * @Description:  网络地址封装
- * @FilePath: /multhread/Socket/InetAddress.hpp
+ * @FilePath: /multhread/src/Socket/InetAddress.hpp
  */
 
 #ifndef INETADDRESS_H_
@@ -16,7 +16,7 @@
 
 class InetAddress  {
     public:
-        explicit InetAddress(uint16_t port = 0, bool ifLoopback = false, bool ipv6 = false);
+        explicit InetAddress(uint16_t port = 0, bool ifLoopback = true, bool ipv6 = false);
         InetAddress(const std::string& ip, uint16_t port, bool ipv6 = false);
         
         explicit InetAddress(const struct sockaddr_in& addr);

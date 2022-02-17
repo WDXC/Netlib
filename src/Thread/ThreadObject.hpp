@@ -1,10 +1,10 @@
 /*** 
  * @Author: Zty
  * @Date: 2022-02-13 11:14:02
- * @LastEditTime: 2022-02-15 19:49:12
+ * @LastEditTime: 2022-02-17 08:14:09
  * @LastEditors: Zty
  * @Description: 线程对象
- * @FilePath: /multhread/Thread/ThreadObject.hpp
+ * @FilePath: /multhread/src/Thread/ThreadObject.hpp
  */
 
 #ifndef THREADOBJECT_H_

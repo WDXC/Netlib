@@ -1,93 +1,84 @@
-/*** 
- * @Author: Zty
- * @Date: 2022-02-13 10:00:59
- * @LastEditTime: 2022-02-16 08:50:37
- * @LastEditors: Zty
- * @Description: 日志 
- * @FilePath: /multhread/src/Log/Logger.hpp
- */
-
-#ifndef LOGGER_H_
-#define LOGGER_H_
+#pragma once
 
 #include <string>
-#include <mutex>
-#include <cstdio>
-#include <cstring>
-#include <cstdarg>
-#include <sys/stat.h>
-#include <sys/time.h>
-#include "BlockQueue.h"
 #include "../Base/NonCopyable.hpp"
-#include "../Base/Singleton.hpp"
 
-class ThreadObject;
+using namespace std;
 
-class Log {
-    public: 
-        enum {
-            DEBUG,
-            INFO,
-            WARN,
-            ERROR,
-        };
-        class SourceFile {
-            public:
-                explicit SourceFile(const char* filename) : data_(filename) {
-                    const char* slash = strrchr(filename, '/');
-                    if (slash) data_ = slash + 1;
-                    size_ = static_cast<int> (strlen(data_));
-                }
-                const char* data_;
-                int size_;
-        };
+#define BUFFER_SIZE 1024
 
-        Log();
-        virtual ~Log();
-        void init(const char* path = "./log/",
-                  int split_lines = 5000000,
-                  int max_queue_size = 1000);
-        static void FlushLogThread();
-        void write(int level, SourceFile file, int line, const char* format, ...);
-        void flush();
-        bool isOpen() const { return m_isOpen; }
-    
-    private:
-        void AsyncWrite();
-        void FlushBuff();
-
-    private:
-        static const int LOG_NAME_LEN = 256;    // 日志文件名长度
-        static const int LOG_BUF_SIZE = 8192;   // 日志缓冲区大小
-    
-    private:
-        int m_isOpen;           // 是否开启日志
-        int m_lineMax;           // 日志最大行数 
-        int m_lineCount;        // 已写日志行数
-        const char* m_path;     // 日志文件路径 
-        int m_today;            // 当前时间的天
-        char* m_buf;            // 临时日志缓冲区
-        std::string m_logStr;   // 日志缓冲区
-
-        FILE* m_fp;
-        std::unique_ptr<BlockQueue<std::string> > m_dequePtr;
-        std::unique_ptr<ThreadObject> m_logThreadPtr;
-        std::mutex m_mutex;
+//日志级别 INFO ERROR FATAL DEBUG
+enum EnLogLevel
+{
+    INFO,  //普通打印信息
+    ERROR, //错误信息
+    FATAL, //core信息
+    DEBUG, //调试信息
 };
 
-using g_LogMgr = Singleton<Log>;
+//LOG_INFO("%s,%d",arg1,arg2)
 
-#define LOG_BASE(level, format, ...) {                                                  \
-    Log* log = g_LogMgr::instance();                                                    \
-    if (log->isOpen()) {                                                                \
-        log->write(level, Log::SourceFile(__FILE__), __LINE__, format, ##__VA_ARGS__);  \
-        log->flush();                                                                   \
-    }                                                                                   \
-} while (false);
+#define LOG_INFO(logmsgFormat, ...)                       \
+    do                                                    \
+    {                                                     \
+        Logger &logger = Logger::instance();              \
+        logger.set_log_level(EnLogLevel::INFO);           \
+        char buf[BUFFER_SIZE] = {0};                      \
+        snprintf(buf, 1024, logmsgFormat, ##__VA_ARGS__); \
+        logger.log(buf);                                  \
+    } while (0)
 
-#define LOG_DEBUG(format, ...) LOG_BASE(Log::DEBUG, format, ##__VA_ARGS__);
-#define LOG_INFO(format, ...) LOG_BASE(Log::INFO, format, ##__VA_ARGS__);
-#define LOG_WARN(format, ...) LOG_BASE(Log::WARN, format, ##__VA_ARGS__);
-#define LOG_ERROR(format, ...) LOG_BASE(Log::ERROR, format, ##__VA_ARGS__);
+#define LOG_ERROR(logmsgFormat, ...)                      \
+    do                                                    \
+    {                                                     \
+        Logger &logger = Logger::instance();              \
+        logger.set_log_level(EnLogLevel::ERROR);          \
+        char buf[BUFFER_SIZE] = {0};                      \
+        snprintf(buf, 1024, logmsgFormat, ##__VA_ARGS__); \
+        logger.log(buf);                                  \
+    } while (0)
 
+#define LOG_WARN(logmsgFormat, ...)                      \
+    do                                                    \
+    {                                                     \
+        Logger &logger = Logger::instance();              \
+        logger.set_log_level(EnLogLevel::FATAL);          \
+        char buf[BUFFER_SIZE] = {0};                      \
+        snprintf(buf, 1024, logmsgFormat, ##__VA_ARGS__); \
+        logger.log(buf);                                  \
+        exit(-1);                                         \
+    } while (0)
+
+#if MUDEBUG
+#define LOG_DEBUG(LogmsgFormat, ...)                      \
+    do                                                    \
+    {                                                     \
+        Logger &logger = Logger::instance();              \
+        logger.set_log_level(EnLogLevel::DEBUG);          \
+        char buf[BUFFER_SIZE] = {0};                      \
+        snprintf(buf, 1024, logmsgFormat, ##__VA_ARGS__); \
+        logger.log(buf);                                  \
+    } while (0)
+#else
+#define LOG_DEBUG(logmsgFormat, ...)
 #endif
+
+//输出一个日志类 单例模式
+class Logger : NoCopyable
+{
+public:
+    //获取唯一实例对象
+    static Logger &instance();
+
+    //设置日志级别
+    void set_log_level(EnLogLevel level);
+
+    //写日志
+    void log(string msg);
+
+private:
+    Logger() {}
+
+private:
+    int log_level_;
+};

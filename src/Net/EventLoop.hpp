@@ -18,7 +18,7 @@
 #include <mutex>
 #include "../Base/NonCopyable.hpp"
 #include "../Timer/TimeStamp.hpp"
-#include "CurrentThread.h"
+#include "CurrentThread.hpp"
 #include "Poller.hpp"
 #include "Channel.hpp"
 

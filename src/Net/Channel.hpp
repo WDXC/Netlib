@@ -47,7 +47,7 @@ class Channel : NoCopyable {
 
         // 判断fd是否设置过感兴趣事件
         bool is_noneEvent(int event) {
-            return events_ = k_none_event_;
+            return events_ == k_none_event_;
         }
         
         // 返回所属eventloop
