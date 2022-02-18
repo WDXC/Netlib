@@ -14,10 +14,18 @@
 5. <b>基于queue实现的数据库连接池</b>
 
 ## 运行
+1. 命令行运行
+
 ```
 mkdir build && cd build<br>
 cmake ..<br>
 make -j 4<br>
+```
+
+2. 一键运行
+
+```
+./build.sh
 ```
 
 ## 运行截图
