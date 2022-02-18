@@ -17,9 +17,9 @@
 1. 命令行运行
 
 ```
-mkdir build && cd build<br>
-cmake ..<br>
-make -j 4<br>
+mkdir build && cd build
+cmake ..
+make -j 4
 ```
 
 2. 一键运行
