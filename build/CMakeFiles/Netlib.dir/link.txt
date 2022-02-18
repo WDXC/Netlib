@@ -1,1 +1,0 @@
-/usr/bin/c++   -O0 -Wall -g -ggdb   CMakeFiles/Netlib.dir/example.cpp.o  -o Netlib  src/liblib_base.a -lpthread -lrt -lmysqlclient 

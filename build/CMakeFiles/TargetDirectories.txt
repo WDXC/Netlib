@@ -1,6 +1,0 @@
-/home/neil/mine/MyProject/C++/multhread/build/CMakeFiles/rebuild_cache.dir
-/home/neil/mine/MyProject/C++/multhread/build/CMakeFiles/edit_cache.dir
-/home/neil/mine/MyProject/C++/multhread/build/CMakeFiles/Netlib.dir
-/home/neil/mine/MyProject/C++/multhread/build/src/CMakeFiles/rebuild_cache.dir
-/home/neil/mine/MyProject/C++/multhread/build/src/CMakeFiles/edit_cache.dir
-/home/neil/mine/MyProject/C++/multhread/build/src/CMakeFiles/lib_base.dir

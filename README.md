@@ -25,6 +25,7 @@ make -j 4<br>
 2. 一键运行
 
 ```
+(sudo) chmod +x build.sh
 ./build.sh
 ```
 
