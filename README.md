@@ -20,6 +20,9 @@ cmake ..<br>
 make -j 4<br>
 ```
 
+## 运行截图
+![avatar](./Asset/res_screenshots.png)  
+
 ## 致谢
 <b>《Linux高性能服务器编程》游双 著</b>  
 <b>《Linux多线程服务端编程》陈硕 著</b>  
