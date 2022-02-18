@@ -1,15 +1,15 @@
 #include "SqlConnPool.hpp"
 #include "../Log/Logger.hpp"
 
-SqlPool::SqlPool() {
+SqlConnPool::SqlConnPool() {
 
 }
 
-SqlPool::~SqlPool() {
+SqlConnPool::~SqlConnPool() {
     ClosePool();
 }
 
-void SqlPool::Init(const std::string& host, int port,
+void SqlConnPool::Init(const std::string& host, int port,
                    const std::string& user, const std::string& pwd,
                    const std::string& db_name, int conn_size) {
     for (int i = 0; i < m_connQue.size(); ++i) {
@@ -27,7 +27,7 @@ void SqlPool::Init(const std::string& host, int port,
     m_max_conn = conn_size;
 }
 
-void SqlPool::ClosePool() {
+void SqlConnPool::ClosePool() {
     std::unique_lock<std::mutex> locker(m_mutex);
     while (!m_connQue.empty()) {
         auto item = m_connQue.front();
@@ -37,10 +37,10 @@ void SqlPool::ClosePool() {
     mysql_library_end();
 }
 
-MYSQL* SqlPool::getConnObj() {
+MYSQL* SqlConnPool::getConnObj() {
     MYSQL* sql = nullptr;
     if (m_connQue.empty()) {
-        LOG_WARN("SqlPool busy");
+        LOG_WARN("SqlConnPool busy");
         return nullptr;
     }
 
@@ -53,7 +53,7 @@ MYSQL* SqlPool::getConnObj() {
     return sql;
 }
 
-void SqlPool::FreeConnObj(MYSQL* conn) {
+void SqlConnPool::FreeConnObj(MYSQL* conn) {
     if (!conn) {
         std::unique_lock<std::mutex> locker(m_mutex);
         m_connQue.push(conn);
