@@ -1,1 +1,0 @@
-/usr/bin/c++   -O0 -Wall -g -ggdb   CMakeFiles/HttpServer.dir/example/HttpServer_test.cpp.o  -o bin/HttpServer   -L/home/neil/mine/MyProject/C++/multhread/lib  -Wl,-rpath,/home/neil/mine/MyProject/C++/multhread/lib src/lib_Net.a -lpthread -lrt -lmysqlclient 

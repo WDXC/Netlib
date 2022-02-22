@@ -1,7 +1,0 @@
-/home/neil/mine/MyProject/C++/multhread/build/CMakeFiles/rebuild_cache.dir
-/home/neil/mine/MyProject/C++/multhread/build/CMakeFiles/edit_cache.dir
-/home/neil/mine/MyProject/C++/multhread/build/CMakeFiles/HttpServer.dir
-/home/neil/mine/MyProject/C++/multhread/build/CMakeFiles/EchoServer.dir
-/home/neil/mine/MyProject/C++/multhread/build/src/CMakeFiles/rebuild_cache.dir
-/home/neil/mine/MyProject/C++/multhread/build/src/CMakeFiles/edit_cache.dir
-/home/neil/mine/MyProject/C++/multhread/build/src/CMakeFiles/_Net.dir

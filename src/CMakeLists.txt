@@ -63,10 +63,11 @@ set (base_SRCS
 	 Http/HttpServer.cpp
 )
 
+set(LIBRARY_OUTPUT_LIB ./lib)
 
-add_library(_Net STATIC ${base_SRCS})
+add_library(Net STATIC ${base_SRCS})
 
 find_package(Threads)
 
-target_link_libraries(_Net ${CMAKE_THREAD_LIBS_INIT} -lrt libmysqlclient.so)
+target_link_libraries(Net ${CMAKE_THREAD_LIBS_INIT} -lrt libmysqlclient.so)
 

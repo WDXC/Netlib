@@ -16,3 +16,5 @@ else
 	make -j 4 > /dev/null
 	echo "make Successfully"
 fi
+
+cp ./src/libNet.a ../lib

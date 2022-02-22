@@ -1,1 +1,0 @@
-/usr/bin/c++   -O0 -Wall -g -ggdb   CMakeFiles/EchoServer.dir/example/EchoServer_test.cpp.o  -o bin/EchoServer   -L/home/neil/mine/MyProject/C++/multhread/lib  -Wl,-rpath,/home/neil/mine/MyProject/C++/multhread/lib src/lib_Net.a -lpthread -lrt -lmysqlclient 
