@@ -1,10 +1,10 @@
 /*** 
  * @Author: Zty
  * @Date: 2022-02-14 12:29:58
- * @LastEditTime: 2022-02-15 16:39:07
+ * @LastEditTime: 2022-02-18 10:37:18
  * @LastEditors: Zty
  * @Description: 线程池
- * @FilePath: /multhread/Thread/ThreadPool.hpp
+ * @FilePath: /multhread/src/Thread/ThreadPool.hpp
  */
 
 #ifndef THREADPOOL_H_
@@ -16,7 +16,7 @@
 #include <pthread.h>
 #include <mutex>
 #include <condition_variable>
-#include "../Log/Logger.hpp"
+#include "../Log/Log.hpp"
 
 template <class T>
 class ThreadPool {

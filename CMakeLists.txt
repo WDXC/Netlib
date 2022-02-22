@@ -10,6 +10,11 @@ SET(CMAKE_CXX_FLAGS_RELEASE "$ENV{CXXFLAGS} -O3 -Wall")
 
 add_subdirectory(src)
 
-add_executable(Netlib example.cpp)
+link_directories(${CMAKE_SOURCE_DIR}/lib)
+set(EXECUTABLE_OUTPUT_PATH ./bin)
 
-target_link_libraries(Netlib lib_base)
+add_executable(EchoServer ./example/EchoServer_test.cpp)
+add_executable(HttpServer ./example/HttpServer_test.cpp)
+
+target_link_libraries(EchoServer _Net)
+target_link_libraries(HttpServer _Net)

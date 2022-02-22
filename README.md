@@ -13,8 +13,8 @@
 4. <b>基于set实现的定时器</b>
 5. <b>基于queue实现的数据库连接池</b>
 
-## 运行
-1. 命令行运行
+##  编译
+1. 命令行
 
 ```
 mkdir build && cd build
@@ -22,15 +22,20 @@ cmake ..
 make -j 4
 ```
 
-2. 一键运行
+2. 一键编译
 
 ```
 (sudo) chmod +x build.sh
-./build.sh
+. ./build.sh
 ```
 
 ## 运行截图
+1. EchoServer_test ($PWD/build/bin/EchoServer)   
 ![avatar](./Asset/res_screenshots.png)  
+
+2. HttpServer_test ($PWD/build/bin/HttpServer)  
+![avatar](./Asset/HttpServer.png)
+
 
 ## 致谢
 <b>《Linux高性能服务器编程》游双 著</b>  

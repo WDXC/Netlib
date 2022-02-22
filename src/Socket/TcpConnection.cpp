@@ -1,5 +1,5 @@
 #include "TcpConnection.hpp"
-#include "../Log/Logger.hpp"
+#include "../Log/Log.hpp"
 #include "Socket.hpp"
 #include "../Net/EventLoop.hpp"
 #include "../Net/Channel.hpp"
@@ -48,14 +48,35 @@ void TcpConnection::send(const std::string& buf) {
         if (loop_->is_in_loopThread()) {
             send_inLoop(buf);
         } else {
-            loop_->run_in_loop(std::bind(&TcpConnection::send_inLoop, this, buf));
+            void (TcpConnection::*fp)(const std::string& message) = &TcpConnection::send_inLoop;
+            loop_->run_in_loop(std::bind(fp,
+                                         this, 
+                                         buf));
+        }
+    }
+}
+
+void TcpConnection::send(Buffer* buf) {
+    // 必须是连接状态
+    if (state_ == k_connected) {
+        if (loop_->is_in_loopThread()) {
+            send_inLoop(buf->peek(), buf->readable_bytes());
+            buf->retrieve_all();
+        } else {
+            void (TcpConnection::*fp)(const std::string& message) = &TcpConnection::send_inLoop;
+            loop_->run_in_loop(std::bind(fp,
+                                         this, 
+                                         buf->retrieve_asString()));
         }
     }
 }
 
 void TcpConnection::send_inLoop (const std::string& buf) {
+    send_inLoop(buf, buf.size());
+}
+
+void TcpConnection::send_inLoop (const std::string& buf, size_t remaining) {
     ssize_t nwrote = 0;
-    size_t remaining = buf.size();
     bool error = false;
 
     if (state_ == k_disconnected) {

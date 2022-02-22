@@ -1,8 +1,16 @@
+/*** 
+ * @Author: Zty
+ * @Date: 2022-02-16 09:18:08
+ * @LastEditTime: 2022-02-18 10:36:12
+ * @LastEditors: Zty
+ * @Description: 
+ * @FilePath: /multhread/src/Socket/SocketOps.cpp
+ */
 #include "SocketOps.hpp"
-#include "../Log/Logger.hpp"
+#include "../Log/Log.hpp"
 
 void sockets::bind(int sockfd, const struct sockaddr* addr) {
-    int ret = ::bind(sockfd, addr, sizeof(addr));
+    int ret = ::bind(sockfd, addr, sizeof(sockaddr_in));
     if (ret < 0) {
         LOG_ERROR("SocketOps: bind address error!");
         return;

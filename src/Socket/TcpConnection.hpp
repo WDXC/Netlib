@@ -1,10 +1,10 @@
 /*** 
  * @Author: Zty
  * @Date: 2022-02-15 10:21:22
- * @LastEditTime: 2022-02-15 10:42:54
+ * @LastEditTime: 2022-02-19 19:40:11
  * @LastEditors: Zty
  * @Description: Tcp连接类
- * @FilePath: /multhread/Socket/TcpConnection.hpp
+ * @FilePath: /multhread/src/Socket/TcpConnection.hpp
  */
 
 #ifndef TCPCONNECTION_H_
@@ -16,8 +16,10 @@
 #include "../Base/NonCopyable.hpp"
 #include "../Timer/TimeStamp.hpp"
 #include "../Base/Callbacks.hpp"
+//#include "../Base/Any.hpp"
 #include "InetAddress.hpp"
 #include "Buffer.hpp"
+#include <boost/any.hpp>
 
 class Channel;
 class EventLoop;
@@ -64,6 +66,7 @@ class TcpConnection : NoCopyable,
 
         // 发送数据
         void send(const std::string& buf);
+        void send(Buffer* buf);
 
         // 断开连接
         void shutdown();
@@ -92,6 +95,18 @@ class TcpConnection : NoCopyable,
             writeCallback_ = cb;
         }
 
+        void setContext(const boost::any& context) {
+            context_ = context;
+        }
+
+        const boost::any& getContext() const {
+            return context_;
+        }
+
+				boost::any* getMutableContext() {
+            return &context_;
+        }
+
     private:
         void handle_read(TimeStamp receive_time);
         void handle_write();
@@ -99,6 +114,7 @@ class TcpConnection : NoCopyable,
         void handle_error();
 
         void send_inLoop(const std::string& buf);
+        void send_inLoop(const std::string& buf, size_t len);
         void shutdown_inLoop();
 
     private:
@@ -124,6 +140,8 @@ class TcpConnection : NoCopyable,
 
         Buffer input_buffer_;
         Buffer output_buffer_;
+//        Any context_;
+			  boost::any context_;
 };
 
 #endif

@@ -1,10 +1,10 @@
 /*** 
  * @Author: Zty
  * @Date: 2022-02-15 10:10:18
- * @LastEditTime: 2022-02-15 19:35:54
+ * @LastEditTime: 2022-02-19 16:58:38
  * @LastEditors: Zty
  * @Description: 
- * @FilePath: /multhread/Socket/TcpServer.hpp
+ * @FilePath: /multhread/src/Socket/TcpServer.hpp
  */
 
 #ifndef TCPSERVER_H_
@@ -16,7 +16,7 @@
 #include <functional>
 #include <unordered_map>
 
-#include "../Log/Logger.hpp"
+#include "../Log/Log.hpp"
 #include "../Net/EventLoop.hpp"
 #include "../Base/Callbacks.hpp"
 #include "../Base/NonCopyable.hpp"
@@ -60,7 +60,14 @@ class TcpServer : NoCopyable {
 
         void set_thread_num(int thread_num);
 
+
         void start();
+
+        EventLoop* getLoop() const {return loop_;}
+
+        const std::string& getName() {return name_;}
+
+        const std::string& getIpPort() {return ip_port;}
     
     private:
         void new_connection(int sockfd, const InetAddress& peerAddr);

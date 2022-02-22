@@ -1,18 +1,9 @@
-/*** 
- * @Author: Zty
- * @Date: 2022-02-13 15:07:02
- * @LastEditTime: 2022-02-13 18:44:12
- * @LastEditors: Zty
- * @Description: 
- * @FilePath: /multhread/Event/EventLoop.cpp
- */
-
 #include <unistd.h>
 #include <fcntl.h>
 #include <functional>
 #include <sys/eventfd.h>
 #include "EventLoop.hpp"
-#include "../Log/Logger.hpp"
+#include "../Log/Log.hpp"
 
 __thread EventLoop *t_loop_in_thisThread = nullptr;
 

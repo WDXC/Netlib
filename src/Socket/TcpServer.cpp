@@ -12,6 +12,7 @@ TcpServer::TcpServer(EventLoop* loop, const InetAddress& listenaddr,
                      const std::string& name, Option option) : 
     loop_(loop),
     ip_port(listenaddr.get_ip_port()),
+    name_(name),
     acceptor_(new Acceptor(loop, listenaddr, option=k_reuse_port)),
     thread_pool_(new EventLoopThreadPool(loop, name_)),
     connectionCallback_(),

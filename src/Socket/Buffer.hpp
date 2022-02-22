@@ -1,10 +1,10 @@
 /*** 
  * @Author: Zty
  * @Date: 2022-02-14 12:57:50
- * @LastEditTime: 2022-02-14 13:20:22
+ * @LastEditTime: 2022-02-19 16:05:40
  * @LastEditors: Zty
  * @Description:  缓冲区设计
- * @FilePath: /multhread/Socket/Buffer.hpp
+ * @FilePath: /multhread/src/Socket/Buffer.hpp
  */
 
 #ifndef BUFFER_H_
@@ -67,6 +67,10 @@ class Buffer : NoCopyable {
             return res;
         }
 
+        void retrieveUntil(const char* end) {
+            retrieve(end-peek());
+        }
+
         // 保证缓冲区有足够长度可写
         void ensure_writable_bytes(size_t len) {
             if (writable_bytes() < len) {
@@ -77,6 +81,14 @@ class Buffer : NoCopyable {
         // 返回可写数据地址
         char* begin_write() {
             return begin() + write_index_;
+        }
+
+        const char* begin_write()  const {
+            return begin() + write_index_;
+        }
+
+        void append(const std::string&  str) {
+            append(str.c_str(), str.size());
         }
 
         // 往缓冲区中添加数据
@@ -91,6 +103,11 @@ class Buffer : NoCopyable {
 
         // 通过fd发送数据
         ssize_t writefd(int fd, int* save_errno);
+
+        const char* findCRLF () const {
+            const char* crlf = std::search(peek(), begin_write(), kCRLF, kCRLF+2);
+            return crlf == NULL ? NULL : crlf;
+        }
 
     private:
         // 缓冲区起始地址
@@ -123,6 +140,7 @@ class Buffer : NoCopyable {
         std::vector<char> buffer_;
         size_t read_index_;
         size_t write_index_;
+        static const char kCRLF[];
 };
 
 

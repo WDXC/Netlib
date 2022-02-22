@@ -1,5 +1,5 @@
 #include "Channel.hpp"
-#include "../Log/Logger.hpp"
+#include "../Log/Log.hpp"
 #include "EventLoop.hpp"
 #include <sys/epoll.h>
 

@@ -1,7 +1,7 @@
 /*** 
  * @Author: Zty
  * @Date: 2022-02-13 10:32:50
- * @LastEditTime: 2022-02-17 13:34:28
+ * @LastEditTime: 2022-02-18 11:19:46
  * @LastEditors: Zty
  * @Description: 阻塞队列
  * @FilePath: /multhread/src/Log/BlockQueue.hpp
@@ -75,7 +75,7 @@ bool BlockQueue<T>::isEmpty() {
 template <class T>
 bool BlockQueue<T>::isFull() {
     std::unique_lock<std::mutex> locker(m_mutex);
-    return m_maxSize >= m_deque.size();
+    return m_deque.empty() >= m_maxSize;
 }
 
 template <class T>
@@ -125,7 +125,7 @@ void BlockQueue<T>::PushBack(const T& item) {
 template <class T>
 bool BlockQueue<T>::PopFront(T& item) {
     std::unique_lock<std::mutex> locker(m_mutex);
-    while (m_deque.size() <= 0) {
+    while (m_deque.empty()) {
         m_noEmptyConVar.wait(locker);
         if (m_isClose) return false;
     }
@@ -138,18 +138,19 @@ bool BlockQueue<T>::PopFront(T& item) {
 template <class T>
 bool BlockQueue<T>::PopBack(T& item) {
     std::unique_lock<std::mutex> locker(m_mutex);
-    while (m_deque.size() <= 0) {
+    while (m_deque.empty()) {
         m_noEmptyConVar.wait(locker);
         if (m_isClose) return false;
     }
     item = m_deque.back();
-    m_deque.pop_front();
+    m_deque.pop_back();
     m_noFullConVar.notify_one();
     return true;
 }
 
 template <class T>
 void BlockQueue<T>::Flush() {
+    std::unique_lock<std::mutex> locker(m_mutex);
     m_noEmptyConVar.notify_one();
 }
 

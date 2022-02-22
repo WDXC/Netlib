@@ -1,5 +1,5 @@
 #include "SqlConnPool.hpp"
-#include "../Log/Logger.hpp"
+#include "../Log/Log.hpp"
 
 SqlConnPool::SqlConnPool() {
 

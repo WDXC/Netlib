@@ -10,13 +10,9 @@ cmake .. > /dev/null
 
 if [ ! -x "Netlib" ]; then
 	make -j 4 > /dev/null
-	clear
 	echo "make Successfully"
 else 
 	make clean
 	make -j 4 > /dev/null
-	clear
 	echo "make Successfully"
 fi
-
-./Netlib

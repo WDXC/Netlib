@@ -25,6 +25,7 @@ set (base_SRCS
 	 Base/NonCopyable.hpp
 	 Base/Callbacks.hpp
 	 Base/Singleton.hpp
+	 Base/Any.hpp
 	 Thread/ThreadObject.hpp
 	 Thread/FuncThreadPool.hpp
 	 Thread/ThreadObject.cpp
@@ -44,18 +45,28 @@ set (base_SRCS
 	 Socket/InetAddress.cpp
 	 Socket/Accetpor.cpp
 	 Socket/SocketOps.cpp
-	 Log/Logger.cpp
 	 Log/BlockQueue.hpp
-	 Log/Logger.hpp
+	 Log/Log.hpp
+	 Log/Log.cpp
 	 Timer/TimeStamp.cpp
 	 Timer/TimeStamp.hpp
 	 Mysql/SqlConnPool.hpp
 	 Mysql/SqlConnPool.cpp
+	 Mysql/SqlHandler.hpp
+	 Mysql/SqlHandler.cpp
+	 Http/HttpRequest.hpp
+	 Http/HttpContext.hpp
+	 Http/HttpContext.cpp
+	 Http/HttpResponse.hpp
+	 Http/HttpResponse.cpp
+	 Http/HttpServer.hpp
+	 Http/HttpServer.cpp
 )
 
-add_library(lib_base ${base_SRCS})
+
+add_library(_Net STATIC ${base_SRCS})
 
 find_package(Threads)
 
-target_link_libraries(lib_base ${CMAKE_THREAD_LIBS_INIT} -lrt libmysqlclient.so)
+target_link_libraries(_Net ${CMAKE_THREAD_LIBS_INIT} -lrt libmysqlclient.so)
 

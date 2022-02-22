@@ -1,7 +1,7 @@
 /*** 
  * @Author: Zty
  * @Date: 2022-02-13 11:14:02
- * @LastEditTime: 2022-02-17 08:14:09
+ * @LastEditTime: 2022-02-18 10:37:10
  * @LastEditors: Zty
  * @Description: 线程对象
  * @FilePath: /multhread/src/Thread/ThreadObject.hpp
@@ -12,7 +12,7 @@
 
 #include <functional>
 #include <pthread.h>
-#include "../Log/Logger.hpp"
+#include "../Log/Log.hpp"
 
 class ThreadObject {
     public:
