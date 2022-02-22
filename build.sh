@@ -8,7 +8,7 @@ fi
 
 cmake .. > /dev/null
 
-if [ ! -x "Netlib" ]; then
+if [ ! -d "bin" ]; then
 	make -j 4 > /dev/null
 	echo "make Successfully"
 else 

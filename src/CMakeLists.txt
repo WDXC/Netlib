@@ -50,6 +50,10 @@ set (base_SRCS
 	 Log/Log.cpp
 	 Timer/TimeStamp.cpp
 	 Timer/TimeStamp.hpp
+	 Timer/Timer.hpp
+	 Timer/Timer.cpp
+	 Timer/TimerQueue.hpp
+	 Timer/TimerQueue.cpp
 	 Mysql/SqlConnPool.hpp
 	 Mysql/SqlConnPool.cpp
 	 Mysql/SqlHandler.hpp

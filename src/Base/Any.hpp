@@ -1,12 +1,3 @@
-/*** 
- * @Author: Zty
- * @Date: 2022-02-19 17:30:38
- * @LastEditTime: 2022-02-19 21:23:47
- * @LastEditors: Zty
- * @Description: 
- * @FilePath: /multhread/src/Base/Any.hpp
- */
-
 #include <iostream>
 #include <memory>
 #include <typeindex>
@@ -40,6 +31,7 @@ struct Any {
     }
 
     Any& operator= (const Any& a) {
+        if (m_ptr == nullptr) return *this;
         if (m_ptr == a.m_ptr) {
             return *this;
         }
@@ -50,7 +42,7 @@ struct Any {
 
     private:
         struct Base;
-        typedef std::unique_ptr<Base> BasePtr;
+        using BasePtr = std::unique_ptr<Base> ;
 
         struct Base {
             virtual ~Base() {}
@@ -60,7 +52,7 @@ struct Any {
         template <typename T>
         struct Derived : Base {
             template <typename U>
-            Derived(U && value) : m_value(value) { }
+            Derived(U && value) : m_value(std::forward<U>(value)) { }
 
             BasePtr Clone() const {
                 return BasePtr(new Derived<T> (m_value));

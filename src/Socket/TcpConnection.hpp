@@ -16,7 +16,6 @@
 #include "../Base/NonCopyable.hpp"
 #include "../Timer/TimeStamp.hpp"
 #include "../Base/Callbacks.hpp"
-//#include "../Base/Any.hpp"
 #include "InetAddress.hpp"
 #include "Buffer.hpp"
 #include <boost/any.hpp>
@@ -140,8 +139,7 @@ class TcpConnection : NoCopyable,
 
         Buffer input_buffer_;
         Buffer output_buffer_;
-//        Any context_;
-			  boost::any context_;
+				boost::any context_;
 };
 
 #endif

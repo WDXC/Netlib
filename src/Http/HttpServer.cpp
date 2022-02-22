@@ -27,16 +27,14 @@ void HttpServer::start() {
 
 void HttpServer::onConnection(const TcpConnectionPtr& conn) {
     if (conn->connected()) {
-        conn->setContext(HttpContext());
+        conn->setContext((HttpContext) HttpContext());
     }
 }
 
 void HttpServer::onMessage (const TcpConnectionPtr& conn,
                             Buffer* buf,
                             TimeStamp receTime) {
-//    Any temp = (HttpContext*)conn->getMutableContext();
-//    HttpContext* context = temp.AnyCast<HttpContext*>();
-			HttpContext* context = boost::any_cast<HttpContext>(conn->getMutableContext());
+		HttpContext* context = boost::any_cast<HttpContext>(conn->getMutableContext());
 
     if (!context->parseRequest(buf, receTime)) {
         conn->send("HTTP/1.1 400 Bad Request\r\n\r\n");

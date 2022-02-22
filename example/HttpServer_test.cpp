@@ -52,7 +52,7 @@ void onRequest(const HttpRequest& req, HttpResponse* resp) {
 }
 
 int main(int argc, char* argv[]) {
-  g_LogMgr::instance()->init("./log", 5000000, 1000);
+//  g_LogMgr::instance()->init("./log", 5000000, 1000);
   int numThreads = 0;
   EventLoop loop;
   HttpServer server(&loop, InetAddress(8000), "dummy");
