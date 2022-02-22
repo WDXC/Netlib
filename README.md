@@ -30,7 +30,7 @@ make -j 4
 ```
 
 ## 运行截图
-### <b>EchoServer_test</b>
+<b>EchoServer_test</b>
 
 ```
 cd $PWD/build/bin/
@@ -39,7 +39,7 @@ cd $PWD/build/bin/
 
 ![avatar](./Asset/res_screenshots.png)  
 
-### <b>HttpServer_test</b>     
+<b>HttpServer_test</b>     
 
 ```
 cd $PWD/build/bin/
