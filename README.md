@@ -30,10 +30,10 @@ make -j 4
 ```
 
 ## 运行截图
-1. EchoServer_test ($PWD/build/bin/EchoServer)   
+1. <b>EchoServer_test</b>    ($PWD/build/bin/EchoServer)   
 ![avatar](./Asset/res_screenshots.png)  
 
-2. HttpServer_test ($PWD/build/bin/HttpServer)  
+2. <b>HttpServer_test</b>    ($PWD/build/bin/HttpServer)  
 ![avatar](./Asset/HttpServer.png)
 
 
