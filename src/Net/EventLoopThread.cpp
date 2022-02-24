@@ -1,14 +1,6 @@
-/*** 
- * @Author: Zty
- * @Date: 2022-02-16 09:18:08
- * @LastEditTime: 2022-02-18 10:33:45
- * @LastEditors: Zty
- * @Description: 
- * @FilePath: /multhread/src/Net/EventLoopThread.cpp
- */
 #include "EventLoopThread.hpp"
 #include "EventLoop.hpp"
-#include  "../Log/Log.hpp"
+#include  "Log.hpp"
 
 EventLoopThread::EventLoopThread(ThreadInitCallback cb, const std::string& name) : 
     loop_(nullptr),

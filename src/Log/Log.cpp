@@ -1,4 +1,4 @@
-#include "../Thread/ThreadObject.hpp"
+#include "ThreadObject.hpp"
 #include "Log.hpp"
 
 Log::Log () :

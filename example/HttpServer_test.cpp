@@ -1,11 +1,11 @@
 #include <string.h>
 #include <iostream>
 #include <map>
-#include "../src/Http/HttpServer.hpp"
-#include "../src/Http/HttpContext.hpp"
-#include "../src/Http/HttpRequest.hpp"
-#include "../src/Http/HttpResponse.hpp"
-#include "../src/Timer/TimeStamp.hpp"
+#include "Http/HttpServer.hpp"
+#include "Http/HttpContext.hpp"
+#include "Http/HttpRequest.hpp"
+#include "Http/HttpResponse.hpp"
+#include "Timer/TimeStamp.hpp"
 
 using namespace std;
 

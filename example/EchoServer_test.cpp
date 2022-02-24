@@ -1,4 +1,4 @@
-#include "../src/Socket/TcpServer.hpp"
+#include "Socket/TcpServer.hpp"
 #include <string>
 #include <functional>
 

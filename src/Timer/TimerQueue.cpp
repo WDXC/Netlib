@@ -1,5 +1,5 @@
 #include "TimerQueue.hpp"
-#include "../Log/Log.hpp"
+#include "Log.hpp"
 #include <sys/timerfd.h>
 
 using Entry = std::pair<TimeStamp, std::shared_ptr<Timer>>;

@@ -1,77 +1,29 @@
-include_directories(
-	PRIVATE ./Base
+cmake_minimum_required(VERSION 3.4.1)
+
+set(CMAKE_CXX_STANDARD 14)
+
+include_directories(${PROJECT_SOURCE_DIR}/include/Http
+										${PROJECT_SOURCE_DIR}/include/Socket
+										${PROJECT_SOURCE_DIR}/include/Log
+										${PROJECT_SOURCE_DIR}/include/Net
+										${PROJECT_SOURCE_DIR}/include/Timer
+										${PROJECT_SOURCE_DIR}/include/Thread
+										${PROJECT_SOURCE_DIR}/include/Base
+										${PROJECT_SOURCE_DIR}/include/Mysql
 )
+
 # 添加对gdb的支持
 SET(CMAKE_BUILD_TYPE "Debug")
 SET(CMAKE_CXX_FLAGS_DEBUG "$ENV{CXXFLAGS} -O0 -Wall -g -ggdb")
 SET(CMAKE_CXX_FLAGS_RELEASE "$ENV{CXXFLAGS} -O3 -Wall")
 
-set (base_SRCS
-	 Net/EventLoopThreadPool.cpp
-	 Net/EventLoopThread.hpp
-	 Net/EpollPoller.cpp
-	 Net/EventLoopThread.cpp
-	 Net/EpollPoller.hpp
-	 Net/CurrentThread.hpp
-	 Net/CurrentThread.cpp
-	 Net/EventLoopThreadPool.hpp
-	 Net/Channel.cpp
-	 Net/Channel.hpp
-	 Net/EventLoop.cpp
-	 Net/Poller.hpp
-	 Net/EventLoop.hpp
-	 Net/Poller.cpp
-	 Net/DefaultPoller.cpp
-	 Base/NonCopyable.hpp
-	 Base/Callbacks.hpp
-	 Base/Singleton.hpp
-	 Base/Any.hpp
-	 Thread/ThreadObject.hpp
-	 Thread/FuncThreadPool.hpp
-	 Thread/ThreadObject.cpp
-	 Thread/ThreadPool.hpp
-	 Thread/FuncThreadPool.cpp
-	 Socket/Socket.cpp
-	 Socket/TcpServer.hpp
-	 Socket/Buffer.cpp
-	 Socket/Buffer.hpp
-	 Socket/Socket.hpp
-	 Socket/TcpServer.cpp
-	 Socket/SocketOps.hpp
-	 Socket/TcpConnection.cpp
-	 Socket/InetAddress.hpp
-	 Socket/TcpConnection.hpp
-	 Socket/Acceptor.hpp
-	 Socket/InetAddress.cpp
-	 Socket/Accetpor.cpp
-	 Socket/SocketOps.cpp
-	 Log/BlockQueue.hpp
-	 Log/Log.hpp
-	 Log/Log.cpp
-	 Timer/TimeStamp.cpp
-	 Timer/TimeStamp.hpp
-	 Timer/Timer.hpp
-	 Timer/Timer.cpp
-	 Timer/TimerQueue.hpp
-	 Timer/TimerQueue.cpp
-	 Mysql/SqlConnPool.hpp
-	 Mysql/SqlConnPool.cpp
-	 Mysql/SqlHandler.hpp
-	 Mysql/SqlHandler.cpp
-	 Http/HttpRequest.hpp
-	 Http/HttpContext.hpp
-	 Http/HttpContext.cpp
-	 Http/HttpResponse.hpp
-	 Http/HttpResponse.cpp
-	 Http/HttpServer.hpp
-	 Http/HttpServer.cpp
-)
+file(GLOB_RECURSE native_srcs ./*.cpp)
 
-set(LIBRARY_OUTPUT_LIB ./lib)
+file(GLOB_RECURSE include_file ${PROJECT_SOURCE_DIR}/include/*.hpp)
 
-add_library(Net STATIC ${base_SRCS})
+
+add_library(Net STATIC ${native_srcs} ${include_file})
 
 find_package(Threads)
 
 target_link_libraries(Net ${CMAKE_THREAD_LIBS_INIT} -lrt libmysqlclient.so)
-

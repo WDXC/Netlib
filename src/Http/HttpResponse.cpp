@@ -1,5 +1,5 @@
 #include "HttpResponse.hpp"
-#include "../Socket/Buffer.hpp"
+#include "Buffer.hpp"
 
 void HttpResponse::appendToBuffer(Buffer* output) const {
     char buf[32];

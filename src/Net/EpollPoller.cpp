@@ -2,7 +2,7 @@
 #include <errno.h>
 #include <cstring>
 #include <unistd.h>
-#include "../Log/Log.hpp"
+#include "Log.hpp"
 #include "Channel.hpp"
 
 const int k_new = -1;

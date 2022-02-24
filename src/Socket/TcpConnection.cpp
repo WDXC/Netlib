@@ -1,8 +1,8 @@
 #include "TcpConnection.hpp"
-#include "../Log/Log.hpp"
+#include "Log.hpp"
 #include "Socket.hpp"
-#include "../Net/EventLoop.hpp"
-#include "../Net/Channel.hpp"
+#include "EventLoop.hpp"
+#include "Channel.hpp"
 
 #include <functional>
 #include <sys/socket.h>

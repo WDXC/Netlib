@@ -3,7 +3,7 @@
 #include <functional>
 #include <sys/eventfd.h>
 #include "EventLoop.hpp"
-#include "../Log/Log.hpp"
+#include "Log.hpp"
 
 __thread EventLoop *t_loop_in_thisThread = nullptr;
 

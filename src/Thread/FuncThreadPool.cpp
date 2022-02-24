@@ -1,5 +1,5 @@
 #include "FuncThreadPool.hpp"
-#include "../Log/Log.hpp"
+#include "Log.hpp"
 
 FuncThreadPool::FuncThreadPool(int threadNumber, int maxRequests) : 
     m_threadNumber(threadNumber),

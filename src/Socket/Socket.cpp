@@ -1,7 +1,7 @@
 #include "Socket.hpp"
 #include "InetAddress.hpp"
 #include "SocketOps.hpp"
-#include "../Log/Log.hpp"
+#include "Log.hpp"
 #include <netinet/tcp.h>
 
 Socket::Socket(int fd) : m_sockfd(fd) {
