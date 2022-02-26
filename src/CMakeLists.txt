@@ -10,6 +10,7 @@ include_directories(${PROJECT_SOURCE_DIR}/include/Http
 										${PROJECT_SOURCE_DIR}/include/Thread
 										${PROJECT_SOURCE_DIR}/include/Base
 										${PROJECT_SOURCE_DIR}/include/Mysql
+										${PROJECT_SOURCE_DIR}/include/rapidjson
 )
 
 # 添加对gdb的支持

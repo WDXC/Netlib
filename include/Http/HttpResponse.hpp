@@ -1,12 +1,3 @@
-/*** 
- * @Author: Zty
- * @Date: 2022-02-19 15:42:53
- * @LastEditTime: 2022-02-19 20:34:22
- * @LastEditors: Zty
- * @Description: 
- * @FilePath: /multhread/src/Http/HttpResponse.hpp
- */
-
 #ifndef HTTPRESPONSE_H_
 #define HTTPRESPONSE_H_
 

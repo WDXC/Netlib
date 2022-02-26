@@ -1,12 +1,3 @@
-/*** 
- * @Author: Zty
- * @Date: 2022-02-19 11:54:27
- * @LastEditTime: 2022-02-19 20:30:21
- * @LastEditors: Zty
- * @Description: 
- * @FilePath: /multhread/src/Http/HttpRequest.hpp
- */
-
 #ifndef HTTPREQUEST_H_
 #define HTTPREQUEST_H_
 
