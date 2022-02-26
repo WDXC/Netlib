@@ -20,7 +20,7 @@ InetAddress::InetAddress(uint16_t port, bool ifLoopback, bool ipv6) {
 }
 
 InetAddress::InetAddress(const std::string& ip, uint16_t port, bool ipv6) {
-    if (ipv6) {
+    if (ipv6 || strchr(ip.c_str(), ':')) {
         memset(&m_addr6, 0, sizeof(m_addr6));
         m_addr6.sin6_family = AF_INET6;
         inet_pton(AF_INET6, ip.c_str(), &m_addr6.sin6_addr);
