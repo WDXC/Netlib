@@ -1,12 +1,3 @@
-/*** 
- * @Author: Zty
- * @Date: 2022-02-15 09:07:08
- * @LastEditTime: 2022-02-15 19:07:58
- * @LastEditors: Zty
- * @Description: 连接接收类
- * @FilePath: /multhread/Socket/Acceptor.hpp
- */
-
 #ifndef ACCEPTOR_H_
 #define ACCEPTOR_H_
 

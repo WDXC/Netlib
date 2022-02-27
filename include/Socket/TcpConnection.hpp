@@ -1,12 +1,3 @@
-/*** 
- * @Author: Zty
- * @Date: 2022-02-15 10:21:22
- * @LastEditTime: 2022-02-19 19:40:11
- * @LastEditors: Zty
- * @Description: Tcp连接类
- * @FilePath: /multhread/src/Socket/TcpConnection.hpp
- */
-
 #ifndef TCPCONNECTION_H_
 #define TCPCONNECTION_H_
 

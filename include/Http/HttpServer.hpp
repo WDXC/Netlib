@@ -1,12 +1,3 @@
-/*** 
- * @Author: Zty
- * @Date: 2022-02-19 16:11:01
- * @LastEditTime: 2022-02-19 16:51:29
- * @LastEditors: Zty
- * @Description: 
- * @FilePath: /multhread/src/Http/HttpServer.hpp
- */
-
 #ifndef HTTPSERVER_H_
 #define HTTPSERVER_H_
 

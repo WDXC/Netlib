@@ -1,12 +1,3 @@
-/*** 
- * @Author: Zty
- * @Date: 2022-02-22 15:46:17
- * @LastEditTime: 2022-02-22 16:35:36
- * @LastEditors: Zty
- * @Description: 
- * @FilePath: /multhread/src/Timer/TimerQueue.hpp
- */
-
 #ifndef TIMEQUEUE_H_
 #define TIMEQUEUE_H_
 

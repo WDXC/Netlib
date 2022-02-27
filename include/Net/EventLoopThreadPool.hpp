@@ -1,12 +1,3 @@
-/*** 
- * @Author: Zty
- * @Date: 2022-02-15 18:11:32
- * @LastEditTime: 2022-02-15 19:47:15
- * @LastEditors: Zty
- * @Description: 事件线程池
- * @FilePath: /multhread/Net/EventLoopThreadPool.hpp
- */
-
 #ifndef EVENTLOOPTHREADPOOL_H_
 #define EVENTLOOPTHREADPOOL_H_
 

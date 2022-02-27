@@ -1,12 +1,3 @@
-/*** 
- * @Author: Zty
- * @Date: 2022-02-14 14:07:24
- * @LastEditTime: 2022-02-15 11:50:48
- * @LastEditors: Zty
- * @Description: RAII资源管理
- * @FilePath: /multhread/Socket/Socket.hpp
- */
-
 #ifndef SOCKET_H_
 #define SOCKET_H_ 
 

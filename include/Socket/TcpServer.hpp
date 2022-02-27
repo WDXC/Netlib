@@ -1,12 +1,3 @@
-/*** 
- * @Author: Zty
- * @Date: 2022-02-15 10:10:18
- * @LastEditTime: 2022-02-19 16:58:38
- * @LastEditors: Zty
- * @Description: 
- * @FilePath: /multhread/src/Socket/TcpServer.hpp
- */
-
 #ifndef TCPSERVER_H_
 #define TCPSERVER_H_
 

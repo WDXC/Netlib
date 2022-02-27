@@ -1,12 +1,3 @@
-/*** 
- * @Author: Zty
- * @Date: 2022-02-14 12:57:50
- * @LastEditTime: 2022-02-19 16:05:40
- * @LastEditors: Zty
- * @Description:  缓冲区设计
- * @FilePath: /multhread/src/Socket/Buffer.hpp
- */
-
 #ifndef BUFFER_H_
 #define BUFFER_H_
 

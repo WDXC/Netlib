@@ -1,12 +1,3 @@
-/*** 
- * @Author: Zty
- * @Date: 2022-02-13 10:00:59
- * @LastEditTime: 2022-02-18 11:34:52
- * @LastEditors: Zty
- * @Description: 日志 
- * @FilePath: /multhread/src/Log/Log.hpp
- */
-
 #ifndef LOGGER_H_
 #define LOGGER_H_
 

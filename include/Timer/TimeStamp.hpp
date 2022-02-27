@@ -1,12 +1,3 @@
-/*** 
- * @Author: Zty
- * @Date: 2022-02-13 10:04:27
- * @LastEditTime: 2022-02-22 16:21:27
- * @LastEditors: Zty
- * @Description: 时间戳
- * @FilePath: /multhread/src/Timer/TimeStamp.hpp
- */
-
 #ifndef TIMESTAMP_H_
 #define TIMESTAMP_H_
 

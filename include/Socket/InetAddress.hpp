@@ -1,12 +1,3 @@
-/*** 
- * @Author: Zty
- * @Date: 2022-02-14 14:08:34
- * @LastEditTime: 2022-02-16 19:52:02
- * @LastEditors: Zty
- * @Description:  网络地址封装
- * @FilePath: /multhread/src/Socket/InetAddress.hpp
- */
-
 #ifndef INETADDRESS_H_
 #define INETADDRESS_H_
 

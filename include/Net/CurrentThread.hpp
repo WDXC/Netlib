@@ -1,12 +1,3 @@
-/*** 
- * @Author: Zty
- * @Date: 2022-02-13 12:54:07
- * @LastEditTime: 2022-02-13 13:10:30
- * @LastEditors: Zty
- * @Description: 判断是否为当前线程
- * @FilePath: /multhread/Event/CurrentThread.h
- */
-
 #ifndef CURRENTTHREAD_H_
 #define CURRENTTHREAD_H_
 

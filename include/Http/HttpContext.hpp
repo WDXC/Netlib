@@ -1,11 +1,3 @@
-/*** 
- * @Author: Zty
- * @Date: 2022-02-19 12:24:34
- * @LastEditTime: 2022-02-19 12:33:30
- * @LastEditors: Zty
- * @Description: 
- * @FilePath: /multhread/src/Http/HttpContext.hpp
- */
 
 #ifndef HTTPCONTEXT_H_
 #define HTTPCONTEXT_H_

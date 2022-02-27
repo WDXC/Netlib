@@ -1,12 +1,3 @@
-/*** 
- * @Author: Zty
- * @Date: 2022-02-13 11:14:02
- * @LastEditTime: 2022-02-18 10:37:10
- * @LastEditors: Zty
- * @Description: 线程对象
- * @FilePath: /multhread/src/Thread/ThreadObject.hpp
- */
-
 #ifndef THREADOBJECT_H_
 #define THREADOBJECT_H_
 

@@ -1,12 +1,3 @@
-/*** 
- * @Author: Zty
- * @Date: 2022-02-13 10:02:10
- * @LastEditTime: 2022-02-13 18:46:29
- * @LastEditors: Zty
- * @Description: 
- * @FilePath: /multhread/Event/EpollPoller.hpp
- */
-
 #ifndef EPOLLERPOLLER_H_
 #define EPOLLERPOLLER_H_
 

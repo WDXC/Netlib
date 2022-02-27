@@ -1,7 +1,4 @@
-﻿/*
- * @brief:重新优化json，提升效率
- */
-#include "Json_data.hpp"
+﻿#include "Json_data.hpp"
 
 namespace Json
 {

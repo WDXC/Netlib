@@ -1,12 +1,3 @@
-/*** 
- * @Author: Zty
- * @Date: 2022-02-22 15:13:53
- * @LastEditTime: 2022-02-22 15:38:02
- * @LastEditors: Zty
- * @Description:  定时器
- * @FilePath: /multhread/src/Timer/Timer.hpp
- */
-
 #ifndef TIMER_H_
 #define TIMER_H_
 

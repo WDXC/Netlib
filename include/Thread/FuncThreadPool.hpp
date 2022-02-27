@@ -1,12 +1,3 @@
-/*** 
- * @Author: Zty
- * @Date: 2022-02-13 20:40:33
- * @LastEditTime: 2022-02-13 20:45:43
- * @LastEditors: Zty
- * @Description: 函数线程池
- * @FilePath: /multhread/Thread/FuncThreadPool.h
- */
-
 #ifndef FUNCTHREADPOOL_H_
 #define FUNCTHREADPOOL_H_
 

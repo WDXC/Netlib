@@ -1,12 +1,3 @@
-/*** 
- * @Author: Zty
- * @Date: 2022-02-14 13:47:16
- * @LastEditTime: 2022-02-15 09:01:43
- * @LastEditors: Zty
- * @Description: socket操作
- * @FilePath: /multhread/Socket/SocketOps.hpp
- */
-
 #ifndef SOCKETOPS_H_
 #define SOCKETOPS_H_
 

@@ -4,6 +4,8 @@
 #include <string>
 #include <map>
 #include "../Timer/TimeStamp.hpp"
+#include "../Socket/Json_data.hpp"
+#include "../Log/Log.hpp"
 
 class HttpRequest {
     public:
@@ -136,6 +138,21 @@ class HttpRequest {
             receTime_.swap(that.receTime_);
             headers_.swap(that.headers_);
         }
+
+        bool setRequestBody(const std::string& data) {
+            Json::CJsonData root;
+            if (!root.DecodeJson(data)) {
+                LOG_ERROR("parse json failed");
+                return false;
+            }
+            BodyData_ = root;
+            return true;
+        }
+
+        const Json::CJsonData getRequestBody() const {
+            return BodyData_;
+        }
+
     
     private:
         Method method_;
@@ -143,6 +160,7 @@ class HttpRequest {
         std::string path_;
         std::string query_;
         TimeStamp receTime_;
+        Json::CJsonData BodyData_;
         std::map<std::string, std::string> headers_;
 };
 

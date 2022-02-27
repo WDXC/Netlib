@@ -1,12 +1,3 @@
-/*** 
- * @Author: Zty
- * @Date: 2022-02-13 10:01:51
- * @LastEditTime: 2022-02-15 19:45:54
- * @LastEditors: Zty
- * @Description: 
- * @FilePath: /multhread/Net/EventLoopThread.hpp
- */
-
 #ifndef EVENTLOOPTHREAD_H_
 #define EVENTLOOPTHREAD_H_
 

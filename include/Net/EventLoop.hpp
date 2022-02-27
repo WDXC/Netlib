@@ -1,12 +1,3 @@
-/*** 
- * @Author: Zty
- * @Date: 2022-02-13 10:01:38
- * @LastEditTime: 2022-02-13 18:42:11
- * @LastEditors: Zty
- * @Description: 循环事件
- * @FilePath: /multhread/Event/EventLoop.hpp
- */
-
 #ifndef EVENTLOOP_H_
 #define EVENTLOOP_H_
 

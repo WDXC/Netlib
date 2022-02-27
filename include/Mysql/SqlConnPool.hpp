@@ -1,11 +1,3 @@
-/*** 
- * @Author: Zty
- * @Date: 2022-02-16 09:18:08
- * @LastEditTime: 2022-02-18 09:17:23
- * @LastEditors: Zty
- * @Description: 
- * @FilePath: /multhread/src/Mysql/SqlConnPool.hpp
- */
 #ifndef SQLCONNPOOL_H_
 #define SQLCONNPOOL_H_
 

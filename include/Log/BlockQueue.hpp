@@ -1,11 +1,3 @@
-/*** 
- * @Author: Zty
- * @Date: 2022-02-13 10:32:50
- * @LastEditTime: 2022-02-18 11:19:46
- * @LastEditors: Zty
- * @Description: 阻塞队列
- * @FilePath: /multhread/src/Log/BlockQueue.hpp
- */
 
 #ifndef BLOCKQUEUE_H_
 #define BLOCKQUEUE_H_

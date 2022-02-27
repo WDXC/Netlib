@@ -62,8 +62,6 @@ void EpollPoller::remove_channel(Channel* channel) {
 }
 
 TimeStamp EpollPoller::poll(int timeout, ChannelList* active_channels) {
-    LOG_DEBUG("func = %s => fd total count: %d \n", __FUNCTION__, channel_.size());
-
     int events_num = epoll_wait(epollfd_, &*events_.begin(), 
                                 static_cast<int>(events_.size()),timeout);
     int save_errno = errno;
@@ -76,7 +74,7 @@ TimeStamp EpollPoller::poll(int timeout, ChannelList* active_channels) {
             events_.resize(events_.size() * 2);
         }
     } else if (events_num == 0) {
-        LOG_DEBUG("%s timeout \n", __FUNCTION__);
+        LOG_DEBUG("no events happened");
     } else {
         if (save_errno != EINTR) {
             errno = save_errno;

@@ -1,12 +1,3 @@
-/*** 
- * @Author: Zty
- * @Date: 2022-02-14 12:29:58
- * @LastEditTime: 2022-02-18 10:37:18
- * @LastEditors: Zty
- * @Description: 线程池
- * @FilePath: /multhread/src/Thread/ThreadPool.hpp
- */
-
 #ifndef THREADPOOL_H_
 #define THREADPOOL_H_
 

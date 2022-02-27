@@ -1,12 +1,3 @@
-/*** 
- * @Author: Zty
- * @Date: 2022-02-13 10:02:45
- * @LastEditTime: 2022-02-13 18:45:05
- * @LastEditors: Zty
- * @Description: 事件分发器
- * @FilePath: /multhread/Event/Channel.hpp
- */
-
 #ifndef CHANNEL_H_
 #define CHANNEL_H_
 
