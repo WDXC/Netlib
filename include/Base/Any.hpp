@@ -1,6 +1,12 @@
+// Version of c++11 based on boost::any adaptation
+
+#ifndef ANY_H_
+#define ANY_H_
+
 #include <iostream>
 #include <memory>
 #include <typeindex>
+
 struct Any {
     Any(void) : m_tpIndex(std::type_index(typeid(void))) { }
     Any(Any& that) : m_ptr(that.Clone()), m_tpIndex(that.m_tpIndex) { }
@@ -72,3 +78,5 @@ struct Any {
         BasePtr m_ptr;
         std::type_index m_tpIndex;
 };
+
+#endif

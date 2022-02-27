@@ -1,9 +1,8 @@
+
 #ifndef HTTPRESPONSE_H_
 #define HTTPRESPONSE_H_
 
-
 #include <map>
-
 
 class Buffer;
 

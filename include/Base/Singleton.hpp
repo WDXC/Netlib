@@ -1,11 +1,6 @@
-/*** 
- * @Author: Zty
- * @Date: 2022-02-13 10:23:57
- * @LastEditTime: 2022-02-13 10:28:13
- * @LastEditors: Zty
- * @Description: 单例模板 
- * @FilePath: /multhread/Base/Singleton.hpp
- */
+// a Singleton template
+// Example:
+// using ins = Singleton<classname>;
 
 #ifndef SINGLETON_H_
 #define SINGLETON_H_

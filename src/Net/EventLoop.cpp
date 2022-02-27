@@ -7,7 +7,7 @@
 
 __thread EventLoop *t_loop_in_thisThread = nullptr;
 
-const int k_poll_timeout = 10000;
+const int k_poll_timeout = 200;
 
 int CreateEventfd() {
     int event_fd = eventfd(0, EFD_NONBLOCK | EFD_CLOEXEC);

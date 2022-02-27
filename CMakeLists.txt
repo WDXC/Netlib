@@ -15,7 +15,5 @@ include_directories(./include)
 set(EXECUTABLE_OUTPUT_PATH ./bin)
 
 add_executable(EchoServer ./example/EchoServer_test.cpp)
-add_executable(HttpServer ./example/HttpServer_test.cpp)
 
 target_link_libraries(EchoServer Net)
-target_link_libraries(HttpServer Net)

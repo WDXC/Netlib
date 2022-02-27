@@ -1,4 +1,3 @@
-
 #ifndef HTTPCONTEXT_H_
 #define HTTPCONTEXT_H_
 

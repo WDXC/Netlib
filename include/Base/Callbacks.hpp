@@ -1,11 +1,4 @@
-/*** 
- * @Author: Zty
- * @Date: 2022-02-13 10:03:40
- * @LastEditTime: 2022-02-15 10:21:05
- * @LastEditors: Zty
- * @Description: 所有回调
- * @FilePath: /multhread/Base/Callbacks.hpp
- */
+// all callback in this file
 
 #ifndef CALLBACK_H_
 #define CALLBACK_H_

@@ -1,3 +1,5 @@
+// Implementation of blocking queue
+// app in multi-thread environment
 
 #ifndef BLOCKQUEUE_H_
 #define BLOCKQUEUE_H_

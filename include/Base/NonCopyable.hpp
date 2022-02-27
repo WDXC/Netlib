@@ -1,11 +1,8 @@
-/*** 
- * @Author: Zty
- * @Date: 2022-02-13 10:00:33
- * @LastEditTime: 2022-02-13 10:06:43
- * @LastEditors: Zty
- * @Description: 不可拷贝基类
- * @FilePath: /multhread/Base/NonCopyable.hpp
- */
+// Disabling Copy Functions and Copy Operators
+// Example:
+// class demo: NoCopyable {
+//
+// }
 
 #ifndef NONCOPYABLE_H_
 #define NONCOPYABLE_H_
