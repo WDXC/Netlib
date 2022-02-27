@@ -37,7 +37,7 @@ cd $PWD/build/bin/
 ./EchoServer
 ```
 
-![avatar](./Asset/res_screenshots.png)  
+![avatar](./Asset/Echo_res.png)  
 
 <b>HttpServer_test</b>     
 
@@ -46,7 +46,9 @@ cd $PWD/build/bin/
 ./HttpServer
 ```
 
-![avatar](./Asset/HttpServer.png)
+![avatar](./Asset/postman_post_res.png)
+![avatar](./Asset/postman_get_res.png)
+![avatar](./Asset/terminal_res.png)
 
 
 ## 致谢

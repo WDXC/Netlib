@@ -25,9 +25,7 @@ void onRequest(const HttpRequest& req, HttpResponse* resp) {
       }
   }
 
-
- if (req.GetPath() == "/api")
-  {
+	if (req.GetPath() == "/api") {
     resp->setContentType("*/*");
     resp->addHeader("Server", "Muduo");
     resp->addHeader("Access-Control-Allow-Origin", "*");
@@ -38,20 +36,18 @@ void onRequest(const HttpRequest& req, HttpResponse* resp) {
     val.EncodeJson(strData);
 
     resp->setBody(strData);
-  }
-	
-  if (req.GetPath() == "/register") {
-        resp->setContentType("*/*");
-        resp->addHeader("Server", "Zty");
-        resp->addHeader("Access-Control-Allow-Origin", "*");
-        resp->addHeader("Cache-Control", "no-cache");
+  } else if (req.GetPath() == "/register") {
+    resp->setContentType("*/*");
+    resp->addHeader("Server", "Zty");
+    resp->addHeader("Access-Control-Allow-Origin", "*");
+    resp->addHeader("Cache-Control", "no-cache");
 
-        Json::CJsonData root;
-        root.PushValue("type", "register");
-        root.PushValue("body", "hello world");
-        std::string strData;
-        root.EncodeJson(strData);
-        resp->setBody(strData);
+    Json::CJsonData root;
+    root.PushValue("type", "register");
+    root.PushValue("body", "hello world");
+    std::string strData;
+    root.EncodeJson(strData);
+    resp->setBody(strData);
   }
 }
 

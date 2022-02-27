@@ -40,9 +40,13 @@ bool HttpContext::processRequestLine(const char* begin, const char* end) {
 bool HttpContext::parseRequest(Buffer* m_buf, TimeStamp recetime) {
   bool ok = true;
   bool hasMore = true;
+	char* method = nullptr;
   while (hasMore) {
     if (contextState_ == kExpectRequestLine) {
       const char* crlf = m_buf->findCRLF();
+			if (method == nullptr) {
+				method = strstr(const_cast<char*>(m_buf->peek()), "GET");
+			}
       if (crlf) {
         ok = processRequestLine(m_buf->peek(), crlf);
         if (ok) {
@@ -63,7 +67,7 @@ bool HttpContext::parseRequest(Buffer* m_buf, TimeStamp recetime) {
           request_.addHeader(m_buf->peek(), colon, crlf);
         } else {
           char* curly_brackes = strstr(const_cast<char*>(crlf), "{");
-          if (curly_brackes) {
+          if (curly_brackes && !method) {
             contextState_ = kExpectBody;
           } else {
             contextState_ = kGotAll;
@@ -76,8 +80,11 @@ bool HttpContext::parseRequest(Buffer* m_buf, TimeStamp recetime) {
       }
     } else if (contextState_ == kExpectBody) {
       if (!request_.setRequestBody(m_buf->peek())) {
+				request_.setRequestBody("NULL");
         hasMore = false;
       } else {
+				std::string str = m_buf->peek();
+				m_buf->retrieveUntil(m_buf->peek() + str.size());
         contextState_ = kGotAll;
         hasMore = false;
       }
