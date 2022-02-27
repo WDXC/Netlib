@@ -1,6 +1,6 @@
 # NetLib
 
-关于HttpServer内容，在[这里](https://github.com/WDXC/TakeAway)
+<b>关于HttpServer内容，请看[这里](https://github.com/WDXC/TakeAway)</b>
 
 ## 环境
 ```
