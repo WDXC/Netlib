@@ -1,10 +1,12 @@
 # NetLib
 
 ## 环境
-<b> Ubuntu 20.04</b>  
-<b>g++ (Ubuntu 9.3.0-17ubuntu1~20.04) 9.3.0</b>  
-<b>cmake version 3.16</b>  
-<b>Mysql 8.0.28</b>  
+```
+Ubuntu 20.04
+g++ (Ubuntu 9.3.0-17ubuntu1~20.04) 9.3.0
+cmake version 3.16
+Mysql 8.0.28
+```
 
 ## 功能
 1. <b>基于Epoll的Reactor模块</b>  
