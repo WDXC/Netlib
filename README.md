@@ -39,17 +39,6 @@ cd $PWD/build/bin/
 
 ![avatar](./Asset/Echo_res.png)  
 
-<b>HttpServer_test</b>     
-
-```
-cd $PWD/build/bin/
-./HttpServer
-```
-
-![avatar](./Asset/postman_post_res.png)
-![avatar](./Asset/postman_get_res.png)
-![avatar](./Asset/terminal_res.png)
-
 
 ## 致谢
 <b>《Linux高性能服务器编程》游双 著</b>  
