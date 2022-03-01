@@ -2,6 +2,10 @@
 
 <b>关于HttpServer内容，请看[这里](https://github.com/WDXC/TakeAway)</b>
 
+## 项目结构
+
+[!avatar](./Asset/Netlib.png)
+
 ## 环境
 ```
 Ubuntu 20.04
