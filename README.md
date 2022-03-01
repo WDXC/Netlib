@@ -4,7 +4,7 @@
 
 ## 项目结构
 
-[!avatar](./Asset/Netlib.png)
+![avatar](./Asset/Netlib.png)
 
 ## 环境
 ```
