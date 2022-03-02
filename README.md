@@ -61,7 +61,7 @@ cd $PWD/build/bin/
 
 ## 项目分析
 分析这个项目，主要是分析项目中的主从Reactor模型的实现。sub_Reactor实现如下图的思维导图:
-![avatar](./Asset/)
+![avatar](./Asset/Master_slave_Reactor.png)
 
 ## 致谢
 <b>《Linux高性能服务器编程》游双 著</b>  
