@@ -1,6 +1,9 @@
 #include "ThreadObject.hpp"
 #include "Log.hpp"
 
+// 由于是异步日志
+// 需要通过锁来保证同一时间一个对象仅可被一个线访问
+
 Log::Log () :
     m_isOpen(false),
     m_lineCount(0),
@@ -16,7 +19,7 @@ Log::~Log() {
         m_dequePtr->PushBack(m_logStr); // 将未写入的缓冲区加入到队列中
         while (!m_dequePtr->isEmpty()) m_dequePtr->Flush();
         m_dequePtr->Close();
-        m_logThreadPtr->join(); // 析构时显示调用
+        m_logThreadPtr->join(); // 析构时显示调用，join代表线程生命周期结束
     }
     if (m_fp) {
         std::lock_guard<std::mutex> locker(m_mutex);
@@ -104,6 +107,7 @@ void Log::write(int level, SourceFile file, int line ,const char* format, ...) {
     {
         std::lock_guard<std::mutex> locker(m_mutex);
         ++m_lineCount;
+        // 可变参数读取
         va_start(valist, format);
         int n = snprintf(m_buf, 256, "%s %04d-%02d-%02d %02d:%02d:%02d.%06ld [%s:%d] ",
                 logType.c_str(), time.tm_year + 1900, time.tm_mon + 1, time.tm_mday,

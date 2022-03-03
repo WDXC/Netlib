@@ -1,6 +1,8 @@
 #ifndef TIMEQUEUE_H_
 #define TIMEQUEUE_H_
 
+// 通过回调，完成定时器容器
+
 #include <set>
 #include <vector>
 #include <utility> // make_pair

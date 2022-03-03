@@ -1,6 +1,7 @@
 #ifndef CURRENTTHREAD_H_
 #define CURRENTTHREAD_H_
 
+// 判断是否为当前线程
 
 #include <unistd.h>
 #include <sys/syscall.h>

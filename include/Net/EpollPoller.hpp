@@ -1,6 +1,8 @@
 #ifndef EPOLLERPOLLER_H_
 #define EPOLLERPOLLER_H_
 
+// Epoll IO复用
+
 #include <sys/epoll.h>
 #include <vector>
 #include "Poller.hpp"

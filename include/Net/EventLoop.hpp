@@ -1,6 +1,7 @@
 #ifndef EVENTLOOP_H_
 #define EVENTLOOP_H_
 
+// 事件循环
 
 #include <vector>
 #include <atomic>

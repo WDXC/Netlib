@@ -12,13 +12,17 @@ class SqlConnPool {
         SqlConnPool();
         ~SqlConnPool();
 
+        // 初始化数据库连接的相关数据 
         void Init(const std::string& host, int port,
                   const std::string& user, const std::string& pwd,
                   const std::string& db_name, int conn_name);
 
+        // 关闭连接池 
         void ClosePool();
 
+        // 获取连接池中的对象
         MYSQL* getConnObj();
+        // 释放连接对象
         void FreeConnObj(MYSQL* conn);
 
     private:

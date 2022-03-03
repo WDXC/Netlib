@@ -1,6 +1,8 @@
 #ifndef TCPSERVER_H_
 #define TCPSERVER_H_
 
+// 封装Tcpconnection 提供对外接口
+
 #include <memory>
 #include <string>
 #include <atomic>

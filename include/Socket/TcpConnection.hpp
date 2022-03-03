@@ -1,6 +1,8 @@
 #ifndef TCPCONNECTION_H_
 #define TCPCONNECTION_H_
 
+// 用于接收来自client的tcp 连接
+
 #include <string>
 #include <atomic>
 #include <memory>

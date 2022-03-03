@@ -1,6 +1,7 @@
 #ifndef FUNCTHREADPOOL_H_
 #define FUNCTHREADPOOL_H_
 
+// 函数线程池
 
 #include <functional>
 #include <vector>
@@ -15,6 +16,7 @@ class FuncThreadPool {
 
         explicit FuncThreadPool(int threadNumber = 5, int maxRequests = 10000);
         ~FuncThreadPool();
+        // 添加线程
         bool append(Task task);
     private:
         static void* entryFunc(void* arg);

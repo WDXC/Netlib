@@ -27,6 +27,7 @@ void SqlConnPool::Init(const std::string& host, int port,
     m_max_conn = conn_size;
 }
 
+// 连接池在释放时，需要先清空整个队列,再关闭数据库连接
 void SqlConnPool::ClosePool() {
     std::unique_lock<std::mutex> locker(m_mutex);
     while (!m_connQue.empty()) {
@@ -37,6 +38,7 @@ void SqlConnPool::ClosePool() {
     mysql_library_end();
 }
 
+// 获取数据库对象，即从整个数据连接队列中取出一个对象
 MYSQL* SqlConnPool::getConnObj() {
     MYSQL* sql = nullptr;
     if (m_connQue.empty()) {
@@ -53,6 +55,7 @@ MYSQL* SqlConnPool::getConnObj() {
     return sql;
 }
 
+// 释放，就是将连接送回原先的连接队列中
 void SqlConnPool::FreeConnObj(MYSQL* conn) {
     if (!conn) {
         std::unique_lock<std::mutex> locker(m_mutex);

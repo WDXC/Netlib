@@ -1,6 +1,8 @@
 #ifndef POLLER_H_
 #define POLLER_H_
 
+// 对于 POLL 与 EPOLL的封装
+
 #include "../Base/NonCopyable.hpp"
 #include "Channel.hpp"
 #include <vector>

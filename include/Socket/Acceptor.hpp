@@ -1,6 +1,8 @@
 #ifndef ACCEPTOR_H_
 #define ACCEPTOR_H_
 
+// 主Reactor 连接 子Reactor的连接器
+
 #include "../Base/NonCopyable.hpp"
 #include "../Net/EventLoop.hpp"
 #include "../Net/Channel.hpp"

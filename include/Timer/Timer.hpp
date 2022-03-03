@@ -1,6 +1,8 @@
 #ifndef TIMER_H_
 #define TIMER_H_
 
+// 定时器实现
+
 #include <stdint.h>
 #include <sys/time.h>
 #include <functional>
