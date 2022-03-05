@@ -15,7 +15,4 @@ namespace sockets {
     int createNooBlockingSocket();
 }
 
-
-
-
 #endif

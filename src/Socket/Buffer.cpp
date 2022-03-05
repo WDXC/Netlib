@@ -10,7 +10,9 @@ Buffer::Buffer(size_t init_size) :
     buffer_(k_cheap_prepend + init_size),
     read_index_(k_cheap_prepend),
     write_index_(k_cheap_prepend) {
-
+    assert(readable_bytes() == 0);
+    assert(writable_bytes() == init_size);
+    assert(prependable_bytes() == k_cheap_prepend);
 }
 
 ssize_t Buffer::readfd(int fd, int* save_errno) {

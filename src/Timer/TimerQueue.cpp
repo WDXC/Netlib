@@ -73,7 +73,7 @@ void TimerQueue::addTimer(TimerCallback cb, TimeStamp when, double interval) {
 }
 
 void TimerQueue::handleRead () {
-    m_loop->is_in_loopThread();
+    m_loop->assertInLoopThread();
     TimeStamp now(TimeStamp::now());
     handle::readTimerfd(m_timerfd, now);
 

@@ -22,6 +22,7 @@ TcpConnection::TcpConnection(EventLoop* loop, const std::string name, int sockfd
                              const InetAddress& peeraddr) : 
     loop_(CheckLoopNotNull(loop)),
     name_(name),
+		state_(k_connecting),
     socket_(new Socket(sockfd)), 
     channel_(new Channel(loop, sockfd)),
     localaddr_(localaddr),
@@ -45,7 +46,7 @@ TcpConnection::~TcpConnection() {
 void TcpConnection::send(const std::string& buf) {
     // 必须是连接状态
     if (state_ == k_connected) {
-        if (loop_->is_in_loopThread()) {
+        if (loop_->assertInLoopThread()) {
             send_inLoop(buf);
         } else {
             void (TcpConnection::*fp)(const std::string& message) = &TcpConnection::send_inLoop;
@@ -59,7 +60,7 @@ void TcpConnection::send(const std::string& buf) {
 void TcpConnection::send(Buffer* buf) {
     // 必须是连接状态
     if (state_ == k_connected) {
-        if (loop_->is_in_loopThread()) {
+        if (loop_->assertInLoopThread()) {
             send_inLoop(buf->peek(), buf->readable_bytes());
             buf->retrieve_all();
         } else {
@@ -128,12 +129,15 @@ void TcpConnection::shutdown() {
 
 void TcpConnection::shutdown_inLoop() {
     // 当前outputbuffer中数据，全部发送完成
+    loop_->assertInLoopThread();
     if (!channel_->is_writing()) {
         socket_->shutdown_write(); // 关闭写端
     }
 }
 
 void TcpConnection::establish_connect() {
+    loop_->assertInLoopThread();
+    assert(state_ == k_connecting);
     set_state(k_connected);
     channel_->tie(shared_from_this());
     channel_->enable_reading();
@@ -142,11 +146,37 @@ void TcpConnection::establish_connect() {
 }
 
  void TcpConnection::destory_connect() {
+     loop_->assertInLoopThread();
      if (state_ == k_connected) {
          set_state(k_disconnected);
          channel_->dis_enable_all();
+         connectionCallback_(shared_from_this());
      }
      channel_->remove();
+ }
+
+ void TcpConnection::startRead() {
+     loop_->run_in_loop(std::bind(&TcpConnection::startReadInLoop, this));
+ }
+
+ void TcpConnection::startReadInLoop() {
+     loop_->assertInLoopThread();
+     if (!reading_ || !channel_->is_reading()) {
+         channel_->enable_reading();
+         reading_ = true;
+     }
+ }
+
+ void TcpConnection::stopRead() {
+     loop_->run_in_loop(std::bind(&TcpConnection::stopReadInLoop, this));
+ }
+
+ void TcpConnection::stopReadInLoop() {
+     loop_->assertInLoopThread();
+     if (reading_ || channel_->is_reading()) {
+         channel_->dis_enable_reading();
+         reading_ = false;
+     }
  }
 
  void TcpConnection::handle_read (TimeStamp receive_time) {
@@ -191,6 +221,8 @@ void TcpConnection::establish_connect() {
 
  void TcpConnection::handle_close () {
      LOG_INFO("fd=%d state=%d", channel_->get_fd(), (int)state_);
+     assert(state_ == k_connected || state_ == k_disconnecting);
+
      set_state(k_disconnected);
      channel_->dis_enable_all();
 
@@ -204,10 +236,10 @@ void TcpConnection::establish_connect() {
      int optval;
      socklen_t optlen = sizeof(optval);
      int err = 0;
-     if (getsockopt(channel_->get_fd(), SOL_SOCKET, SO_ERROR, &optval, &optlen) < 0) {
+     if (::getsockopt(channel_->get_fd(), SOL_SOCKET, SO_ERROR, &optval, &optlen) < 0) {
          err = errno;
      } else {
-         err = errno;
+         err = optval;
      }
      LOG_ERROR("tcp connection handle error name: %s S0_ERROR:%d\n", name_.c_str(), err);
  }

@@ -1,5 +1,6 @@
 #include "InetAddress.hpp"
 #include <endian.h>
+#include <assert.h>
 #include <cstring>
 #include <arpa/inet.h>
 #include <string.h>

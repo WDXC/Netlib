@@ -20,15 +20,18 @@ class Acceptor : NoCopyable {
         }
 
         void listen();
+				bool listening() const { return listening_; }
     
     private:
         void handleRead();
 
     private:
         EventLoop* m_loop;
+				bool listening_;
         Socket m_acceptSocket;
         Channel m_acceptChannel;
         NewConnectionCallback newConnectionCallback_;
+				int idleFd_;
 };
 
 

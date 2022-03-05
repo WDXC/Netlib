@@ -1,4 +1,5 @@
 #include "TcpServer.hpp"
+#include <assert.h>
 #include <string.h>
 
 EventLoop* CheckKoopNotNull(EventLoop* loop) {
@@ -24,6 +25,7 @@ TcpServer::TcpServer(EventLoop* loop, const InetAddress& listenaddr,
 
 
 TcpServer::~TcpServer() {
+    loop_->assertInLoopThread();
     for (auto& it : connections_) {
         TcpConnectionPtr conn(it.second);
         it.second.reset();
@@ -32,17 +34,20 @@ TcpServer::~TcpServer() {
 }
 
 void TcpServer::set_thread_num(int thread_num) {
+    assert(0 <= thread_num);
     thread_pool_->set_threadNum(thread_num);
 }
 
 void TcpServer::start() {
     if (started_++ == 0) {
         thread_pool_->start(threadCallback_);
+        assert(!acceptor_->listening());
         loop_->run_in_loop(std::bind(&Acceptor::listen, acceptor_.get()));
     }
 }
 
 void TcpServer::new_connection (int sockfd, const InetAddress& peerAddr) {
+    loop_->assertInLoopThread();
     EventLoop* ioloop = thread_pool_->appendThread();
 
     char buffer[BUF_SIZE] = {0};
@@ -77,9 +82,12 @@ void TcpServer::remove_connection (const TcpConnectionPtr& conn) {
 }
 
 void TcpServer::remove_connection_inLoop(const TcpConnectionPtr& conn) {
+    loop_->assertInLoopThread();
     LOG_INFO("tcp server::remove connection in loop[%s]-connection[%s]\n", name_.c_str(), conn->get_name().c_str());
     
-    connections_.erase(conn->get_name());
+    size_t n = connections_.erase(conn->get_name());
+    (void)n;
+    assert(n == 1);
     EventLoop* ioloop = conn->get_loop();
     ioloop->queue_in_loop(std::bind(&TcpConnection::destory_connect, conn));
 }

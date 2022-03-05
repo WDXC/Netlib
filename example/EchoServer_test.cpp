@@ -52,6 +52,7 @@ private:
 
 int main()
 {
+		g_LogMgr::instance()->init("./log", 5000000, 1000);
     EventLoop loop;
     InetAddress addr(8000);
     EchoServer server(&loop, addr, "echo 01");

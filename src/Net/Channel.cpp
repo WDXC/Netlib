@@ -1,5 +1,6 @@
 #include "Channel.hpp"
 #include "Log.hpp"
+#include <assert.h>
 #include "EventLoop.hpp"
 #include <sys/epoll.h>
 
@@ -17,7 +18,8 @@ Channel::Channel(EventLoop* loop, int fd) :
 
 }
 
-Channel::~Channel() {}
+Channel::~Channel() {
+}
 
 void Channel::handle_event(TimeStamp receive_time) {
     if (tied_) {

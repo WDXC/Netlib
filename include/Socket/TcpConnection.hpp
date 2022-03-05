@@ -99,6 +99,12 @@ class TcpConnection : NoCopyable,
             return &context_;
         }
 
+        void startRead();
+        void startReadInLoop();
+
+        void stopRead();
+        void stopReadInLoop();
+
     private:
         void handle_read(TimeStamp receive_time);
         void handle_write();
@@ -132,7 +138,7 @@ class TcpConnection : NoCopyable,
 
         Buffer input_buffer_;
         Buffer output_buffer_;
-				boost::any context_;
+		boost::any context_;
 };
 
 #endif

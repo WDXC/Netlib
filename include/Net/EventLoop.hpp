@@ -5,12 +5,14 @@
 
 #include <vector>
 #include <atomic>
+#include <sys/types.h>
+#include <unistd.h>
+#include <sys/syscall.h>
 #include <functional>
 #include <memory>
 #include <mutex>
 #include "../Base/NonCopyable.hpp"
 #include "../Timer/TimeStamp.hpp"
-#include "CurrentThread.hpp"
 #include "Poller.hpp"
 #include "Channel.hpp"
 
@@ -43,14 +45,23 @@ class EventLoop : NoCopyable {
         void remove_channel(Channel* channel);
         bool has_channel(Channel* channel);
 
+				bool assertInLoopThread() {
+					if (!is_in_loopThread()) {
+						abortNoInLoopThread();
+						return false;
+					}
+					return true;
+				}
+
         // 判断eventloop对象是否在自己的线程中
         bool is_in_loopThread() const {
-            return threadId_ == CurrentThread::tid();
+					return threadId_ == syscall(SYS_gettid);
         }
     
     private:
         void handle_read();
         void do_pending_fucntor();
+				void abortNoInLoopThread();
 
     private:
         std::atomic_bool looping_;

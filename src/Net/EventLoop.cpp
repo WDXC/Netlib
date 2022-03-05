@@ -5,23 +5,27 @@
 #include "EventLoop.hpp"
 #include "Log.hpp"
 
-__thread EventLoop *t_loop_in_thisThread = nullptr;
+namespace {
+	__thread EventLoop *t_loop_in_thisThread = nullptr;
 
-const int k_poll_timeout = 200;
-
-int CreateEventfd() {
-    int event_fd = eventfd(0, EFD_NONBLOCK | EFD_CLOEXEC);
-    if (event_fd < 0) {
-        LOG_WARN("eventfd error: %d \n", errno);
-    }
+	const int k_poll_timeout = 200;
+	int CreateEventfd() {
+		int event_fd = eventfd(0, EFD_NONBLOCK | EFD_CLOEXEC);
+			if (event_fd < 0) {
+				  LOG_WARN("eventfd error: %d \n", errno);
+			}
     return event_fd;
+	}
 }
+
+
+
 
 EventLoop::EventLoop() : 
     looping_(false),
     quit_(false),
     calling_pending_functors_(false),
-    threadId_(CurrentThread::tid()),
+    threadId_(syscall(SYS_gettid)),
     poller_(Poller::new_deafultPoller(this)),
     wakeup_fd(CreateEventfd()),
     wakeup_channel_(new Channel(this, wakeup_fd)) {
@@ -68,14 +72,14 @@ void EventLoop::loop() {
 void EventLoop::quit() {
     quit_ = true;
 
-    if (!is_in_loopThread() || calling_pending_functors_) {
+    if (!assertInLoopThread() || calling_pending_functors_) {
         wakeup();
     }
 }
 
 void EventLoop::run_in_loop(Functor cb) {
     // 在当前loop线程中执行回调
-    if (is_in_loopThread()) {
+    if (assertInLoopThread()) {
         cb();
     }
     // 在其它线程执行cb，唤醒loop所在线程执行cb
@@ -89,7 +93,7 @@ void EventLoop::queue_in_loop(Functor cb) {
         std::unique_lock<std::mutex> locker(functor_mutex_);
         pending_Functors_.emplace_back(cb);
     }
-    if (!is_in_loopThread() || calling_pending_functors_) {
+    if (!assertInLoopThread() || calling_pending_functors_) {
         wakeup(); // 唤醒loop所在线程
     }
 }
@@ -101,6 +105,10 @@ void EventLoop::wakeup() {
     if (n != sizeof(one)) {
         LOG_ERROR("EventLoop::wakeup() writes %lu bytes instead of 8 \n", n);
     }
+}
+
+void EventLoop::abortNoInLoopThread() {
+    LOG_INFO("EventLoop abortNoInLoopThread");
 }
 
 // poller 方法

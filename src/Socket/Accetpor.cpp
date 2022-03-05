@@ -2,11 +2,17 @@
 #include "InetAddress.hpp"
 #include "SocketOps.hpp"
 #include "Log.hpp"
+#include <unistd.h>
+#include <fcntl.h>
+#include <sys/types.h>
+#include <sys/stat.h>
 
 Acceptor::Acceptor(EventLoop* loop, const InetAddress& addr, bool reuseport) : 
     m_loop(loop),
     m_acceptSocket(sockets::createNooBlockingSocket()),
-    m_acceptChannel(m_loop, m_acceptSocket.fd()) {
+    m_acceptChannel(m_loop, m_acceptSocket.fd()),
+		listening_(false),
+		idleFd_(::open("/dev/null", O_RDONLY | O_CLOEXEC)) {
     m_acceptSocket.set_reuseAddr(true);
     m_acceptSocket.set_reusePort(true);
     m_acceptSocket.bindAddress(addr);
@@ -18,13 +24,14 @@ Acceptor::~Acceptor() {
 }
 
 void Acceptor::listen() {
-    m_loop->is_in_loopThread();
+    m_loop->assertInLoopThread();
+		listening_ = true;
     m_acceptSocket.listenAddress();
     m_acceptChannel.enable_reading();
 }
 
 void Acceptor::handleRead () {
-    m_loop->is_in_loopThread();
+    m_loop->assertInLoopThread();
     InetAddress peerAddress;
     int connfd = m_acceptSocket.acceptAddress(&peerAddress);
     if (connfd >= 0) {
@@ -33,5 +40,12 @@ void Acceptor::handleRead () {
         } else {
             sockets::close(connfd);
         }
-    } 
+    } else {
+			if (errno == EMFILE) {
+				::close(idleFd_);
+				idleFd_ = ::accept(m_acceptSocket.fd(), NULL, NULL);
+				::close(idleFd_);
+				idleFd_ = ::open("/dev/null", O_RDONLY | O_CLOEXEC);
+			}
+		}
 }
