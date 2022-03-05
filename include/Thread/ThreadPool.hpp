@@ -1,6 +1,7 @@
 #ifndef THREADPOOL_H_
 #define THREADPOOL_H_
 
+// 线程池模板 
 
 #include <vector>
 #include <queue>

@@ -1,6 +1,8 @@
 #ifndef INETADDRESS_H_
 #define INETADDRESS_H_
 
+// 地址信息处理，可以接收IPv4与IPv6数据
+
 #include <netinet/in.h>
 #include <string>
 #include <string.h>
@@ -19,6 +21,7 @@ class InetAddress  {
         std::string getIpStr() const;
         uint16_t getPort() const ;
 
+        // 获取ip Port数据，用于输出日志
         std::string get_ip_port() const;
 
         sa_family_t family() const {

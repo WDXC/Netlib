@@ -1,6 +1,8 @@
 #ifndef THREADOBJECT_H_
 #define THREADOBJECT_H_
 
+// 基于pthread封装的函数线程池
+
 #include <functional>
 #include <pthread.h>
 #include "../Log/Log.hpp"

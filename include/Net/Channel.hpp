@@ -1,6 +1,8 @@
 #ifndef CHANNEL_H_
 #define CHANNEL_H_
 
+// IO事件分发核心
+
 #include <functional>
 #include <memory>
 #include "../Base/NonCopyable.hpp"

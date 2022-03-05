@@ -1,6 +1,8 @@
 #ifndef SOCKETOPS_H_
 #define SOCKETOPS_H_
 
+// socket 操作
+
 #include <arpa/inet.h>
 #include <unistd.h>
 

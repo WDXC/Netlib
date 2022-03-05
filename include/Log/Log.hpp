@@ -22,8 +22,10 @@ class Log {
             WARN,
             ERROR,
         };
+        // 生成日志文件
         class SourceFile {
             public:
+                // 根据传入的文件名，为其生成对应的日志源文件
                 explicit SourceFile(const char* filename) : data_(filename) {
                     const char* slash = strrchr(filename, '/');
                     if (slash) data_ = slash + 1;
@@ -38,15 +40,20 @@ class Log {
         void init(const char* path = "./log/",
                   int split_lines = 5000000,
                   int max_queue_size = 1000);
+        // 刷新日志线程
         static void FlushLogThread();
+        // 将传入的数据，以对应的格式写入
         void write(int level, SourceFile file, int line, const char* format, ...);
+        // 刷新buffer缓冲区
         void flush();
         bool isOpen() const { 
             return m_isOpen; 
         }
 
     private:
+        // 异步写入
         void AsyncWrite();
+        // 刷新缓冲区
         void FlushBuff();
 
     private:

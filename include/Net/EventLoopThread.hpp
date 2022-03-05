@@ -1,6 +1,8 @@
 #ifndef EVENTLOOPTHREAD_H_
 #define EVENTLOOPTHREAD_H_
 
+// 事件循环线程
+
 #include <functional>
 #include <mutex>
 #include <condition_variable>
@@ -16,6 +18,7 @@ class EventLoopThread : NoCopyable {
         explicit EventLoopThread(ThreadInitCallback cb = ThreadInitCallback(),
                                  const std::string& name = std::string());
         ~EventLoopThread();
+        // 启动线程
         EventLoop* startLoop();
     private:
         void threadFunc();  // 执行回调

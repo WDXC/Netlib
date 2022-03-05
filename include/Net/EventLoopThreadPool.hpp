@@ -1,6 +1,7 @@
 #ifndef EVENTLOOPTHREADPOOL_H_
 #define EVENTLOOPTHREADPOOL_H_
 
+// 事件循环线程池 (sub Reactor)
 
 #include <string>
 #include <vector>
@@ -19,14 +20,18 @@ class EventLoopThreadPool : NoCopyable {
         EventLoopThreadPool(EventLoop* baseloop, const std::string& name);
         ~EventLoopThreadPool();
 
+        // 设置线程总数
         void set_threadNum(int thread_num) { 
             thread_nums_ = thread_num;
         }
 
+        // 启动线程
         void start(const ThreadInitCallback& cb = ThreadInitCallback());
 
+        // 添加线程
         EventLoop* appendThread();
 
+        // 获取所有循环事件 
         std::vector<EventLoop*> get_allLoops();
 
         bool get_started() const {return started_;}

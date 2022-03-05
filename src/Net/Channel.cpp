@@ -43,6 +43,7 @@ void Channel::update() {
     loop_->update_channel(this);
 }
 
+// 处理回调函数
 void Channel::handle_event_withGuard(TimeStamp receive_time) {
     LOG_INFO("channel handleEvent revents: %d\n", real_events_);
 

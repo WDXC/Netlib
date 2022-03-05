@@ -1,6 +1,7 @@
 #ifndef BUFFER_H_
 #define BUFFER_H_
 
+// 缓冲区设计
 
 #include <vector>
 #include <string>
