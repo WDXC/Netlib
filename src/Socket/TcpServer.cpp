@@ -85,9 +85,7 @@ void TcpServer::remove_connection_inLoop(const TcpConnectionPtr& conn) {
     loop_->assertInLoopThread();
     LOG_INFO("tcp server::remove connection in loop[%s]-connection[%s]\n", name_.c_str(), conn->get_name().c_str());
     
-    size_t n = connections_.erase(conn->get_name());
-    (void)n;
-    assert(n == 1);
+    connections_.erase(conn->get_name());
     EventLoop* ioloop = conn->get_loop();
     ioloop->queue_in_loop(std::bind(&TcpConnection::destory_connect, conn));
 }

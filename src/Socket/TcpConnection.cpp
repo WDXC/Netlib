@@ -1,6 +1,7 @@
 #include "TcpConnection.hpp"
 #include "Log.hpp"
 #include "Socket.hpp"
+#include "SocketOps.hpp"
 #include "EventLoop.hpp"
 #include "Channel.hpp"
 
@@ -31,22 +32,22 @@ TcpConnection::TcpConnection(EventLoop* loop, const std::string name, int sockfd
         channel_->setWriteCallback(std::bind(&TcpConnection::handle_write, this));
         channel_->setErrorCallback(std::bind(&TcpConnection::handle_error, this));
         channel_->setCloseCallback(std::bind(&TcpConnection::handle_close, this));
-
-        LOG_INFO("Tcp connect::ctor[%s] at fd = %d\n", name.c_str(), sockfd);
+        LOG_DEBUG("Tcp connect::ctor[%s] at fd = %d\n", name.c_str(), sockfd);
 
         socket_->set_keepAlive(true);
 }
 
 TcpConnection::~TcpConnection() {
-    LOG_INFO("tcp connection::dtor[%s] at fd = %d state %d \n", name_.c_str(),
+    LOG_DEBUG("tcp connection::dtor[%s] at fd = %d state %d \n", name_.c_str(),
                                                                 channel_->get_fd(),
                                                                 (int)state_);
+    // assert(state_ == k_disconnected);
 }
 
 void TcpConnection::send(const std::string& buf) {
     // 必须是连接状态
     if (state_ == k_connected) {
-        if (loop_->assertInLoopThread()) {
+        if (loop_->is_in_loopThread()) {
             send_inLoop(buf);
         } else {
             void (TcpConnection::*fp)(const std::string& message) = &TcpConnection::send_inLoop;
@@ -60,7 +61,7 @@ void TcpConnection::send(const std::string& buf) {
 void TcpConnection::send(Buffer* buf) {
     // 必须是连接状态
     if (state_ == k_connected) {
-        if (loop_->assertInLoopThread()) {
+        if (loop_->is_in_loopThread()) {
             send_inLoop(buf->peek(), buf->readable_bytes());
             buf->retrieve_all();
         } else {
@@ -121,7 +122,7 @@ void TcpConnection::send_inLoop (const std::string& buf, size_t remaining) {
 
 // 断开连接
 void TcpConnection::shutdown() {
-    if (state_ == k_disconnected) {
+    if (state_ == k_connected) {
         set_state(k_disconnecting);
         loop_->run_in_loop(std::bind(&TcpConnection::shutdown_inLoop, this));
     }
@@ -207,7 +208,7 @@ void TcpConnection::establish_connect() {
                      loop_->queue_in_loop(std::bind(writeCallback_, shared_from_this()));
                  }
                  // 正在关闭
-                 if (state_ == k_connecting) {
+                 if (state_ == k_disconnecting) {
                      shutdown_inLoop();
                  }
              }
@@ -233,13 +234,6 @@ void TcpConnection::establish_connect() {
  }
 
  void TcpConnection::handle_error () {
-     int optval;
-     socklen_t optlen = sizeof(optval);
-     int err = 0;
-     if (::getsockopt(channel_->get_fd(), SOL_SOCKET, SO_ERROR, &optval, &optlen) < 0) {
-         err = errno;
-     } else {
-         err = optval;
-     }
+     int err = sockets::getSocketError(channel_->get_fd());
      LOG_ERROR("tcp connection handle error name: %s S0_ERROR:%d\n", name_.c_str(), err);
  }

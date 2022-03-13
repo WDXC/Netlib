@@ -21,6 +21,8 @@ Acceptor::Acceptor(EventLoop* loop, const InetAddress& addr, bool reuseport) :
 
 Acceptor::~Acceptor() {
     m_acceptChannel.dis_enable_all();
+    m_acceptChannel.remove();
+    ::close(idleFd_);
 }
 
 void Acceptor::listen() {
@@ -38,7 +40,7 @@ void Acceptor::handleRead () {
         if (newConnectionCallback_) {
             newConnectionCallback_(connfd, peerAddress);
         } else {
-            sockets::close(connfd);
+            close(connfd);
         }
     } else {
 			if (errno == EMFILE) {

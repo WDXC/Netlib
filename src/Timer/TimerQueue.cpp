@@ -67,11 +67,6 @@ TimerQueue::~TimerQueue() {
     ::close(m_timerfd);
 }
 
-void TimerQueue::addTimer(TimerCallback cb, TimeStamp when, double interval) {
-    Timer* timer = new Timer(std::move(cb), when, interval);
-    m_loop->run_in_loop(std::bind(&TimerQueue::addTimerInLoop, this, timer));
-}
-
 void TimerQueue::handleRead () {
     m_loop->assertInLoopThread();
     TimeStamp now(TimeStamp::now());
@@ -83,6 +78,19 @@ void TimerQueue::handleRead () {
     }
 
     reset(expired, now);
+}
+
+void TimerQueue::addTimer(TimerCallback cb, TimeStamp when, double interval) {
+    Timer* timer = new Timer(std::move(cb), when, interval);
+    // m_loop->runInLoop();
+}
+
+void TimerQueue::addTimerInLoop(Timer *timer) {
+    m_loop->assertInLoopThread();
+
+    if (insert(timer)) {
+        handle::restartTimerfd(m_timerfd, timer->expiration());
+    }
 }
 
 std::vector<Entry> TimerQueue::getExpired(TimeStamp now) {

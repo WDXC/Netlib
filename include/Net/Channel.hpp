@@ -109,6 +109,8 @@ class Channel : NoCopyable {
         int events_;
         int real_events_;
         int index_;
+        bool eventHandling_;
+        bool addedToLoop_;
 
         std::weak_ptr<void> tie_;
         bool tied_;

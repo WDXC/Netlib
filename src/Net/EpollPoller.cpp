@@ -1,5 +1,6 @@
 #include "EpollPoller.hpp"
 #include <errno.h>
+#include <assert.h>
 #include <cstring>
 #include <unistd.h>
 #include "Log.hpp"
@@ -55,10 +56,11 @@ void EpollPoller::remove_channel(Channel* channel) {
 
     LOG_INFO("func = %s fd = %d events = %d index = %d \n",__FUNCTION__,
              channel->get_fd(), channel->get_events(), index);
-    if (index == k_deleted) {
+    assert(index == k_added || index == k_deleted);
+    if (index == k_added) {
         update(EPOLL_CTL_DEL, channel);
     }
-    channel->set_index(k_deleted);
+    channel->set_index(k_new);
 }
 
 TimeStamp EpollPoller::poll(int timeout, ChannelList* active_channels) {
@@ -68,7 +70,7 @@ TimeStamp EpollPoller::poll(int timeout, ChannelList* active_channels) {
 
     TimeStamp now(TimeStamp::now());
     if (events_num > 0) {
-        LOG_DEBUG("%d events happened \n", events_num);
+        // LOG_INFO("%d events happened \n", events_num);
         fill_active_channel(events_num, active_channels);
         if (events_num == events_.size()) {
             events_.resize(events_.size() * 2);

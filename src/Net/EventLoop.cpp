@@ -3,12 +3,14 @@
 #include <functional>
 #include <sys/eventfd.h>
 #include "EventLoop.hpp"
+#include <assert.h>
+#include "SocketOps.hpp"
 #include "Log.hpp"
 
 namespace {
 	__thread EventLoop *t_loop_in_thisThread = nullptr;
 
-	const int k_poll_timeout = 200;
+	const int k_poll_timeout = 10000;
 	int CreateEventfd() {
 		int event_fd = eventfd(0, EFD_NONBLOCK | EFD_CLOEXEC);
 			if (event_fd < 0) {
@@ -101,7 +103,7 @@ void EventLoop::queue_in_loop(Functor cb) {
 // 向wakeupfd中写入一个数据，wakeupchannel发生读事件，就会被唤醒
 void EventLoop::wakeup() {
     uint64_t one = 1;
-    ssize_t n = ::write(wakeup_fd, &one, sizeof(one));
+    ssize_t n = sockets::write(wakeup_fd, &one, sizeof(one));
     if (n != sizeof(one)) {
         LOG_ERROR("EventLoop::wakeup() writes %lu bytes instead of 8 \n", n);
     }
@@ -113,16 +115,21 @@ void EventLoop::abortNoInLoopThread() {
 
 // poller 方法
 void EventLoop::update_channel(Channel* channel) {
+    assert(channel->ower_loop() == this);
+    assertInLoopThread();
     poller_->update_channel(channel);
 }
 
 void EventLoop::remove_channel(Channel* channel) {
+    assert(channel->ower_loop() == this);
+    assertInLoopThread();
     poller_->remove_channel(channel);
 }
 
 bool EventLoop::has_channel(Channel* channel) {
     return poller_->has_channel(channel);
 }
+
 
 void EventLoop::handle_read () {
     wakeup();

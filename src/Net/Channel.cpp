@@ -14,6 +14,8 @@ Channel::Channel(EventLoop* loop, int fd) :
     events_(0),
     real_events_(0),
     index_(-1),
+    eventHandling_(false),
+    addedToLoop_(false),
     tied_(false) {
 
 }
@@ -38,7 +40,9 @@ void Channel::tie(const std::shared_ptr<void>& obj) {
 }
 
 void Channel::remove() {
-    loop_->update_channel(this);
+    if (is_none_event()) {
+        loop_->remove_channel(this);
+    }
 }
 
 void Channel::update() {
@@ -47,7 +51,7 @@ void Channel::update() {
 
 // 处理回调函数
 void Channel::handle_event_withGuard(TimeStamp receive_time) {
-    LOG_INFO("channel handleEvent revents: %d\n", real_events_);
+    // LOG_INFO("channel handleEvent revents: %d\n", real_events_);
 
     // 断开连接
     if ( (real_events_ & EPOLLHUP) && !(real_events_ & EPOLLIN)) {

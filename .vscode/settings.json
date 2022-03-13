@@ -60,6 +60,7 @@
         "set": "cpp",
         "regex": "cpp",
         "shared_mutex": "cpp",
-        "variant": "cpp"
+        "variant": "cpp",
+        "*.rh": "cpp"
     }
 }

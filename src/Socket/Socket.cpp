@@ -27,9 +27,7 @@ int Socket::acceptAddress(InetAddress* peerAddr) {
 }
 
 void Socket::shutdown_write() {
-    if (::shutdown(m_sockfd, SHUT_WR) < 0) {
-        LOG_ERROR("shut wirte error");
-    }
+    sockets::shutdownwrite(m_sockfd);
 }
 
 void Socket::set_tcp_noDelay(bool on) const  {
