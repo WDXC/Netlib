@@ -10,6 +10,7 @@ class InetAddress;
 class Socket : NoCopyable {
     public:
         explicit Socket(int fd);
+        ~Socket();
         int fd() const {return m_sockfd;}
 
         void bindAddress(const InetAddress& addr) const;

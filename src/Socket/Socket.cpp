@@ -8,6 +8,11 @@ Socket::Socket(int fd) : m_sockfd(fd) {
 
 }
 
+Socket::~Socket() {
+    sockets::close(m_sockfd);
+}
+
+
 void Socket::bindAddress(const InetAddress& addr) const {
     sockets::bind(m_sockfd, addr.getSockAddr());
 }
@@ -18,7 +23,7 @@ void Socket::listenAddress() const {
 
 int Socket::acceptAddress(InetAddress* peerAddr) {
     struct sockaddr_in addr;
-    memset(&addr, 0, sizeof(addr));
+    bzero(&addr, sizeof(addr));
     int connfd = sockets::accept(m_sockfd, &addr);
     if (connfd >= 0) {
         peerAddr->setSockAddr(addr);

@@ -47,7 +47,7 @@ EventLoop::EventLoop() :
 EventLoop::~EventLoop() {
     wakeup_channel_->dis_enable_all();
     wakeup_channel_->remove();
-    close(wakeup_fd);
+    sockets::close(wakeup_fd);
     t_loop_in_thisThread = nullptr;
 }
 
@@ -55,7 +55,7 @@ void EventLoop::loop() {
     looping_ = true;
     quit_ = false;
 
-    LOG_INFO("EventLoop %p start looping \n", this);
+    LOG_INFO("EventLoop %p start looping ", this);
 
     while (!quit_) {
         active_channels.clear();
@@ -74,7 +74,7 @@ void EventLoop::loop() {
 void EventLoop::quit() {
     quit_ = true;
 
-    if (!assertInLoopThread() || calling_pending_functors_) {
+    if (!is_in_loopThread()) {
         wakeup();
     }
 }
@@ -86,7 +86,7 @@ void EventLoop::run_in_loop(Functor cb) {
     }
     // 在其它线程执行cb，唤醒loop所在线程执行cb
     else {
-        queue_in_loop(cb);
+        queue_in_loop(std::move(cb));
     }
 }
 
@@ -95,7 +95,7 @@ void EventLoop::queue_in_loop(Functor cb) {
         std::unique_lock<std::mutex> locker(functor_mutex_);
         pending_Functors_.emplace_back(cb);
     }
-    if (!assertInLoopThread() || calling_pending_functors_) {
+    if (!is_in_loopThread() || calling_pending_functors_) {
         wakeup(); // 唤醒loop所在线程
     }
 }
@@ -127,6 +127,8 @@ void EventLoop::remove_channel(Channel* channel) {
 }
 
 bool EventLoop::has_channel(Channel* channel) {
+    assert(channel->ower_loop() == this);
+    assertInLoopThread();
     return poller_->has_channel(channel);
 }
 

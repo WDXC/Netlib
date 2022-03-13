@@ -41,7 +41,6 @@ TcpConnection::~TcpConnection() {
     LOG_DEBUG("tcp connection::dtor[%s] at fd = %d state %d \n", name_.c_str(),
                                                                 channel_->get_fd(),
                                                                 (int)state_);
-    // assert(state_ == k_disconnected);
 }
 
 void TcpConnection::send(const std::string& buf) {
@@ -221,7 +220,7 @@ void TcpConnection::establish_connect() {
  }
 
  void TcpConnection::handle_close () {
-     LOG_INFO("fd=%d state=%d", channel_->get_fd(), (int)state_);
+     LOG_INFO(" handle_close fd=%d state=%d", channel_->get_fd(), (int)state_);
      assert(state_ == k_connected || state_ == k_disconnecting);
 
      set_state(k_disconnected);

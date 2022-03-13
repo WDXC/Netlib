@@ -40,14 +40,14 @@ void Acceptor::handleRead () {
         if (newConnectionCallback_) {
             newConnectionCallback_(connfd, peerAddress);
         } else {
-            close(connfd);
+            ::close(connfd);
         }
     } else {
-			if (errno == EMFILE) {
-				::close(idleFd_);
-				idleFd_ = ::accept(m_acceptSocket.fd(), NULL, NULL);
-				::close(idleFd_);
-				idleFd_ = ::open("/dev/null", O_RDONLY | O_CLOEXEC);
-			}
-		}
+        if (errno == EMFILE) {
+            ::close(idleFd_);
+            idleFd_ = ::accept(m_acceptSocket.fd(), NULL, NULL);
+            ::close(idleFd_);
+            idleFd_ = ::open("/dev/null", O_RDONLY | O_CLOEXEC);
+        }
+    }
 }

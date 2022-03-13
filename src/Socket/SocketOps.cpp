@@ -20,18 +20,18 @@ void sockets::listen(int sockfd) {
 void sockets::close(int sockfd) {
     int ret = ::close(sockfd);
     if (ret < 0) {
-        LOG_ERROR("SocketOps: close error!");
+        LOG_ERROR("SocketOps: close error errno: %d!", errno);
         return ;
     }
 }
 
 int sockets::accept(int sockfd, struct sockaddr_in* addr) {
-    socklen_t len = sizeof(*addr);
+    socklen_t len = static_cast<socklen_t>(sizeof(*addr));
     int connfd = ::accept4(sockfd, (struct sockaddr*) addr, &len, SOCK_NONBLOCK | SOCK_CLOEXEC);
     if (connfd < 0) {
         // accept 错误信号接收处理
         int savedErrno = errno;
-        LOG_ERROR("SocketOps::accept error is %d", savedErrno);
+        LOG_ERROR("SocketOps::accept errno=%d, connfd=%d", savedErrno, connfd);
         switch (savedErrno)
         {
             case EAGAIN:

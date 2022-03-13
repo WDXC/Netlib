@@ -20,7 +20,7 @@ EpollPoller::EpollPoller(EventLoop* loop) :
 }
 
 EpollPoller::~EpollPoller() {
-    close(epollfd_);
+    ::close(epollfd_);
 }
 
 void EpollPoller::update_channel(Channel* channel) {
@@ -35,15 +35,22 @@ void EpollPoller::update_channel(Channel* channel) {
             // 添加
             channel_[sockfd] = channel;
         }
+        else {
+            assert(channel_.find(sockfd) != channel_.end());
+            assert(channel_[sockfd] == channel);
+        }
         channel->set_index(k_added);
         update(EPOLL_CTL_ADD, channel);
     } else { // 注册过
         int sockfd = channel->get_fd();
+        (void)sockfd;
+        assert(channel_.find(sockfd) != channel_.end());
+        assert(channel_[sockfd] == channel);
+        assert(index == k_added);
         if (channel->is_none_event()) {
             update(EPOLL_CTL_DEL, channel);
             channel->set_index(k_deleted);
-        }
-        else {
+        } else {
             update(EPOLL_CTL_MOD, channel);
         }
     }
@@ -51,9 +58,15 @@ void EpollPoller::update_channel(Channel* channel) {
 
 void EpollPoller::remove_channel(Channel* channel) {
     int sockfd = channel->get_fd();
-    int index = channel->index();
-    channel_.erase(sockfd);
 
+    assert(channel_.find(sockfd) != channel_.end());
+    assert(channel_[sockfd] == channel);
+    assert(channel->is_none_event());
+
+    int index = channel->index();
+    assert(index == k_added || index == k_deleted);
+
+    channel_.erase(sockfd);
     LOG_INFO("func = %s fd = %d events = %d index = %d \n",__FUNCTION__,
              channel->get_fd(), channel->get_events(), index);
     assert(index == k_added || index == k_deleted);
