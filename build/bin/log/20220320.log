@@ -1,0 +1,300 @@
+[INFO]: 2022-03-20 08:41:34.186205 [EpollPoller.cpp:29] func = update_channel fd = 5 events = 3 index = -1
+[DEBUG]: 2022-03-20 08:41:34.186301 [EventLoop.cpp:37] EventLoop created 0x7fff288961e0 in thread 126385 
+[INFO]: 2022-03-20 08:41:34.186327 [EpollPoller.cpp:29] func = update_channel fd = 6 events = 3 index = -1
+[DEBUG]: 2022-03-20 08:41:34.186364 [Connector.cpp:18] ctor[0x5634fc3aa8c0]
+[INFO]: 2022-03-20 08:41:34.186385 [TcpClient.cpp:28] TcpClient::TcpClient[TcpClient] - connector 0x7fff28896288
+[INFO]: 2022-03-20 08:41:34.186443 [TcpClient.cpp:55] Tcpclient::connect[TcpClient] - connection to 127.0.0.1 : 2
+[INFO]: 2022-03-20 08:41:34.186637 [EpollPoller.cpp:29] func = update_channel fd = 7 events = 4 index = -1
+[INFO]: 2022-03-20 08:41:34.286850 [EventLoop.cpp:61] EventLoop 0x7fff288961e0 start looping 
+[INFO]: 2022-03-20 08:41:34.286917 [EpollPoller.cpp:80] fd total count 3
+[INFO]: 2022-03-20 08:41:34.286944 [EpollPoller.cpp:87] 2 events happended
+[DEBUG]: 2022-03-20 08:41:34.287017 [Channel.cpp:86] 5: IN PRI 
+[INFO]: 2022-03-20 08:41:34.287056 [TimerQueue.cpp:37] TimerQueue::handleRead() is aaaa=8, 1 at 2022-03-20 08:41:34
+[INFO]: 2022-03-20 08:41:34.287083 [Tcpclient_demo.cpp:9] timeout
+[DEBUG]: 2022-03-20 08:41:34.287138 [Channel.cpp:86] 7: OUT 
+[DEBUG]: 2022-03-20 08:41:34.287157 [Connector.cpp:133] Connector::handleWrite 1
+[INFO]: 2022-03-20 08:41:34.287169 [EpollPoller.cpp:29] func = update_channel fd = 7 events = 0 index = 1
+[INFO]: 2022-03-20 08:41:34.287194 [EpollPoller.cpp:70] func = remove_channel fd = 7 events = 0 index = 2 
+
+[WARN]: 2022-03-20 08:41:34.287215 [Connector.cpp:139] Connector::handleWrite - SO_ERROR = 111
+[DEBUG]: 2022-03-20 08:41:34.287263 [Connector.cpp:180] do not connect
+[INFO]: 2022-03-20 08:41:34.287302 [EpollPoller.cpp:80] fd total count 2
+[INFO]: 2022-03-20 08:41:35.287191 [EpollPoller.cpp:87] 1 events happended
+[DEBUG]: 2022-03-20 08:41:35.287262 [Channel.cpp:86] 5: IN PRI 
+[INFO]: 2022-03-20 08:41:35.287293 [TimerQueue.cpp:37] TimerQueue::handleRead() is aaaa=8, 1 at 2022-03-20 08:41:35
+[INFO]: 2022-03-20 08:41:35.287331 [EpollPoller.cpp:80] fd total count 2
+[INFO]: 2022-03-20 08:41:36.287409 [EpollPoller.cpp:87] 1 events happended
+[DEBUG]: 2022-03-20 08:41:36.287492 [Channel.cpp:86] 5: IN PRI 
+[INFO]: 2022-03-20 08:41:36.287529 [TimerQueue.cpp:37] TimerQueue::handleRead() is aaaa=8, 1 at 2022-03-20 08:41:36
+[INFO]: 2022-03-20 08:41:36.287571 [EpollPoller.cpp:80] fd total count 2
+[INFO]: 2022-03-20 08:41:37.287666 [EpollPoller.cpp:87] 1 events happended
+[DEBUG]: 2022-03-20 08:41:37.287745 [Channel.cpp:86] 5: IN PRI 
+[INFO]: 2022-03-20 08:41:37.287781 [TimerQueue.cpp:37] TimerQueue::handleRead() is aaaa=8, 1 at 2022-03-20 08:41:37
+[INFO]: 2022-03-20 08:41:37.287824 [EpollPoller.cpp:80] fd total count 2
+[INFO]: 2022-03-20 08:41:38.287924 [EpollPoller.cpp:87] 1 events happended
+[DEBUG]: 2022-03-20 08:41:38.287995 [Channel.cpp:86] 5: IN PRI 
+[INFO]: 2022-03-20 08:41:38.288060 [TimerQueue.cpp:37] TimerQueue::handleRead() is aaaa=8, 1 at 2022-03-20 08:41:38
+[INFO]: 2022-03-20 08:41:38.288125 [EpollPoller.cpp:80] fd total count 2
+[INFO]: 2022-03-20 08:41:39.288214 [EpollPoller.cpp:87] 1 events happended
+[DEBUG]: 2022-03-20 08:41:39.288294 [Channel.cpp:86] 5: IN PRI 
+[INFO]: 2022-03-20 08:41:39.288339 [TimerQueue.cpp:37] TimerQueue::handleRead() is aaaa=8, 1 at 2022-03-20 08:41:39
+[INFO]: 2022-03-20 08:41:39.288378 [EpollPoller.cpp:80] fd total count 2
+[INFO]: 2022-03-20 08:41:40.288458 [EpollPoller.cpp:87] 1 events happended
+[DEBUG]: 2022-03-20 08:41:40.288540 [Channel.cpp:86] 5: IN PRI 
+[INFO]: 2022-03-20 08:41:40.288578 [TimerQueue.cpp:37] TimerQueue::handleRead() is aaaa=8, 1 at 2022-03-20 08:41:40
+[INFO]: 2022-03-20 08:41:40.288624 [EpollPoller.cpp:80] fd total count 2
+[INFO]: 2022-03-20 08:41:41.288694 [EpollPoller.cpp:87] 1 events happended
+[DEBUG]: 2022-03-20 08:41:41.288775 [Channel.cpp:86] 5: IN PRI 
+[INFO]: 2022-03-20 08:41:41.288814 [TimerQueue.cpp:37] TimerQueue::handleRead() is aaaa=8, 1 at 2022-03-20 08:41:41
+[INFO]: 2022-03-20 08:41:41.288861 [EpollPoller.cpp:80] fd total count 2
+[INFO]: 2022-03-20 08:41:42.288929 [EpollPoller.cpp:87] 1 events happended
+[DEBUG]: 2022-03-20 08:41:42.289009 [Channel.cpp:86] 5: IN PRI 
+[INFO]: 2022-03-20 08:41:42.289047 [TimerQueue.cpp:37] TimerQueue::handleRead() is aaaa=8, 1 at 2022-03-20 08:41:42
+[INFO]: 2022-03-20 08:41:42.289093 [EpollPoller.cpp:80] fd total count 2
+[INFO]: 2022-03-20 08:41:43.289164 [EpollPoller.cpp:87] 1 events happended
+[DEBUG]: 2022-03-20 08:41:43.289246 [Channel.cpp:86] 5: IN PRI 
+[INFO]: 2022-03-20 08:41:43.289284 [TimerQueue.cpp:37] TimerQueue::handleRead() is aaaa=8, 1 at 2022-03-20 08:41:43
+[INFO]: 2022-03-20 08:41:43.289326 [EpollPoller.cpp:80] fd total count 2
+[INFO]: 2022-03-20 08:41:44.289396 [EpollPoller.cpp:87] 1 events happended
+[DEBUG]: 2022-03-20 08:41:44.289475 [Channel.cpp:86] 5: IN PRI 
+[INFO]: 2022-03-20 08:41:44.289511 [TimerQueue.cpp:37] TimerQueue::handleRead() is aaaa=8, 1 at 2022-03-20 08:41:44
+[INFO]: 2022-03-20 08:41:44.289552 [EpollPoller.cpp:80] fd total count 2
+[INFO]: 2022-03-20 08:41:45.289617 [EpollPoller.cpp:87] 1 events happended
+[DEBUG]: 2022-03-20 08:41:45.289696 [Channel.cpp:86] 5: IN PRI 
+[INFO]: 2022-03-20 08:41:45.289732 [TimerQueue.cpp:37] TimerQueue::handleRead() is aaaa=8, 1 at 2022-03-20 08:41:45
+[INFO]: 2022-03-20 08:41:45.289781 [EpollPoller.cpp:80] fd total count 2
+[INFO]: 2022-03-20 08:41:46.289851 [EpollPoller.cpp:87] 1 events happended
+[DEBUG]: 2022-03-20 08:41:46.289932 [Channel.cpp:86] 5: IN PRI 
+[INFO]: 2022-03-20 08:41:46.289968 [TimerQueue.cpp:37] TimerQueue::handleRead() is aaaa=8, 1 at 2022-03-20 08:41:46
+[INFO]: 2022-03-20 08:41:46.290012 [EpollPoller.cpp:80] fd total count 2
+[INFO]: 2022-03-20 08:41:47.290075 [EpollPoller.cpp:87] 1 events happended
+[DEBUG]: 2022-03-20 08:41:47.290154 [Channel.cpp:86] 5: IN PRI 
+[INFO]: 2022-03-20 08:41:47.290190 [TimerQueue.cpp:37] TimerQueue::handleRead() is aaaa=8, 1 at 2022-03-20 08:41:47
+[INFO]: 2022-03-20 08:41:47.290223 [EpollPoller.cpp:80] fd total count 2
+[INFO]: 2022-03-20 08:41:48.290304 [EpollPoller.cpp:87] 1 events happended
+[DEBUG]: 2022-03-20 08:41:48.290383 [Channel.cpp:86] 5: IN PRI 
+[INFO]: 2022-03-20 08:41:48.290420 [TimerQueue.cpp:37] TimerQueue::handleRead() is aaaa=8, 1 at 2022-03-20 08:41:48
+[INFO]: 2022-03-20 08:41:48.290461 [EpollPoller.cpp:80] fd total count 2
+[INFO]: 2022-03-20 08:41:49.290540 [EpollPoller.cpp:87] 1 events happended
+[DEBUG]: 2022-03-20 08:41:49.290619 [Channel.cpp:86] 5: IN PRI 
+[INFO]: 2022-03-20 08:41:49.290656 [TimerQueue.cpp:37] TimerQueue::handleRead() is aaaa=8, 1 at 2022-03-20 08:41:49
+[INFO]: 2022-03-20 08:41:49.290700 [EpollPoller.cpp:80] fd total count 2
+[INFO]: 2022-03-20 08:41:50.290798 [EpollPoller.cpp:87] 1 events happended
+[DEBUG]: 2022-03-20 08:41:50.290878 [Channel.cpp:86] 5: IN PRI 
+[INFO]: 2022-03-20 08:41:50.290954 [TimerQueue.cpp:37] TimerQueue::handleRead() is aaaa=8, 1 at 2022-03-20 08:41:50
+[INFO]: 2022-03-20 08:41:50.290991 [EpollPoller.cpp:80] fd total count 2
+[INFO]: 2022-03-20 08:41:51.291005 [EpollPoller.cpp:87] 1 events happended
+[DEBUG]: 2022-03-20 08:41:51.291084 [Channel.cpp:86] 5: IN PRI 
+[INFO]: 2022-03-20 08:41:51.291121 [TimerQueue.cpp:37] TimerQueue::handleRead() is aaaa=8, 1 at 2022-03-20 08:41:51
+[INFO]: 2022-03-20 08:41:51.291159 [EpollPoller.cpp:80] fd total count 2
+[INFO]: 2022-03-20 08:41:52.291215 [EpollPoller.cpp:87] 1 events happended
+[DEBUG]: 2022-03-20 08:41:52.291294 [Channel.cpp:86] 5: IN PRI 
+[INFO]: 2022-03-20 08:41:52.291330 [TimerQueue.cpp:37] TimerQueue::handleRead() is aaaa=8, 1 at 2022-03-20 08:41:52
+[INFO]: 2022-03-20 08:41:52.291367 [EpollPoller.cpp:80] fd total count 2
+[INFO]: 2022-03-20 08:41:53.291421 [EpollPoller.cpp:87] 1 events happended
+[DEBUG]: 2022-03-20 08:41:53.291499 [Channel.cpp:86] 5: IN PRI 
+[INFO]: 2022-03-20 08:41:53.291535 [TimerQueue.cpp:37] TimerQueue::handleRead() is aaaa=8, 1 at 2022-03-20 08:41:53
+[INFO]: 2022-03-20 08:41:53.291598 [EpollPoller.cpp:80] fd total count 2
+[INFO]: 2022-03-20 08:41:54.291599 [EpollPoller.cpp:87] 1 events happended
+[DEBUG]: 2022-03-20 08:41:54.291678 [Channel.cpp:86] 5: IN PRI 
+[INFO]: 2022-03-20 08:41:54.291714 [TimerQueue.cpp:37] TimerQueue::handleRead() is aaaa=8, 1 at 2022-03-20 08:41:54
+[INFO]: 2022-03-20 08:41:54.291762 [EpollPoller.cpp:80] fd total count 2
+[INFO]: 2022-03-20 08:41:55.291817 [EpollPoller.cpp:87] 1 events happended
+[DEBUG]: 2022-03-20 08:41:55.291974 [Channel.cpp:86] 5: IN PRI 
+[INFO]: 2022-03-20 08:41:55.292042 [TimerQueue.cpp:37] TimerQueue::handleRead() is aaaa=8, 1 at 2022-03-20 08:41:55
+[INFO]: 2022-03-20 08:41:55.292086 [EpollPoller.cpp:80] fd total count 2
+[INFO]: 2022-03-20 08:41:56.292140 [EpollPoller.cpp:87] 1 events happended
+[DEBUG]: 2022-03-20 08:41:56.292219 [Channel.cpp:86] 5: IN PRI 
+[INFO]: 2022-03-20 08:41:56.292257 [TimerQueue.cpp:37] TimerQueue::handleRead() is aaaa=8, 1 at 2022-03-20 08:41:56
+[INFO]: 2022-03-20 08:41:56.292305 [EpollPoller.cpp:80] fd total count 2
+[INFO]: 2022-03-20 08:41:57.292363 [EpollPoller.cpp:87] 1 events happended
+[DEBUG]: 2022-03-20 08:41:57.292444 [Channel.cpp:86] 5: IN PRI 
+[INFO]: 2022-03-20 08:41:57.292483 [TimerQueue.cpp:37] TimerQueue::handleRead() is aaaa=8, 1 at 2022-03-20 08:41:57
+[INFO]: 2022-03-20 08:41:57.292529 [EpollPoller.cpp:80] fd total count 2
+[INFO]: 2022-03-20 08:41:58.292587 [EpollPoller.cpp:87] 1 events happended
+[DEBUG]: 2022-03-20 08:41:58.292668 [Channel.cpp:86] 5: IN PRI 
+[INFO]: 2022-03-20 08:41:58.292706 [TimerQueue.cpp:37] TimerQueue::handleRead() is aaaa=8, 1 at 2022-03-20 08:41:58
+[INFO]: 2022-03-20 08:41:58.292746 [EpollPoller.cpp:80] fd total count 2
+[INFO]: 2022-03-20 08:41:59.292804 [EpollPoller.cpp:87] 1 events happended
+[DEBUG]: 2022-03-20 08:41:59.292884 [Channel.cpp:86] 5: IN PRI 
+[INFO]: 2022-03-20 08:41:59.292922 [TimerQueue.cpp:37] TimerQueue::handleRead() is aaaa=8, 1 at 2022-03-20 08:41:59
+[INFO]: 2022-03-20 08:41:59.292970 [EpollPoller.cpp:80] fd total count 2
+[INFO]: 2022-03-20 08:42:00.293025 [EpollPoller.cpp:87] 1 events happended
+[DEBUG]: 2022-03-20 08:42:00.293107 [Channel.cpp:86] 5: IN PRI 
+[INFO]: 2022-03-20 08:42:00.293145 [TimerQueue.cpp:37] TimerQueue::handleRead() is aaaa=8, 1 at 2022-03-20 08:42:00
+[INFO]: 2022-03-20 08:42:00.293188 [EpollPoller.cpp:80] fd total count 2
+[INFO]: 2022-03-20 08:42:01.293244 [EpollPoller.cpp:87] 1 events happended
+[DEBUG]: 2022-03-20 08:42:01.293324 [Channel.cpp:86] 5: IN PRI 
+[INFO]: 2022-03-20 08:42:01.293362 [TimerQueue.cpp:37] TimerQueue::handleRead() is aaaa=8, 1 at 2022-03-20 08:42:01
+[INFO]: 2022-03-20 08:42:01.293405 [EpollPoller.cpp:80] fd total count 2
+[INFO]: 2022-03-20 08:42:02.293459 [EpollPoller.cpp:87] 1 events happended
+[DEBUG]: 2022-03-20 08:42:02.293540 [Channel.cpp:86] 5: IN PRI 
+[INFO]: 2022-03-20 08:42:02.293578 [TimerQueue.cpp:37] TimerQueue::handleRead() is aaaa=8, 1 at 2022-03-20 08:42:02
+[INFO]: 2022-03-20 08:42:02.293622 [EpollPoller.cpp:80] fd total count 2
+[INFO]: 2022-03-20 08:42:03.293684 [EpollPoller.cpp:87] 1 events happended
+[DEBUG]: 2022-03-20 08:42:03.293762 [Channel.cpp:86] 5: IN PRI 
+[INFO]: 2022-03-20 08:42:03.293798 [TimerQueue.cpp:37] TimerQueue::handleRead() is aaaa=8, 1 at 2022-03-20 08:42:03
+[INFO]: 2022-03-20 08:42:03.293837 [EpollPoller.cpp:80] fd total count 2
+[INFO]: 2022-03-20 08:42:04.293894 [EpollPoller.cpp:87] 1 events happended
+[DEBUG]: 2022-03-20 08:42:04.293973 [Channel.cpp:86] 5: IN PRI 
+[INFO]: 2022-03-20 08:42:04.294010 [TimerQueue.cpp:37] TimerQueue::handleRead() is aaaa=8, 1 at 2022-03-20 08:42:04
+[INFO]: 2022-03-20 08:42:04.294059 [EpollPoller.cpp:80] fd total count 2
+[INFO]: 2022-03-20 08:42:05.294122 [EpollPoller.cpp:87] 1 events happended
+[DEBUG]: 2022-03-20 08:42:05.294203 [Channel.cpp:86] 5: IN PRI 
+[INFO]: 2022-03-20 08:42:05.294240 [TimerQueue.cpp:37] TimerQueue::handleRead() is aaaa=8, 1 at 2022-03-20 08:42:05
+[INFO]: 2022-03-20 08:42:05.294277 [EpollPoller.cpp:80] fd total count 2
+[INFO]: 2022-03-20 08:42:06.294348 [EpollPoller.cpp:87] 1 events happended
+[DEBUG]: 2022-03-20 08:42:06.294429 [Channel.cpp:86] 5: IN PRI 
+[INFO]: 2022-03-20 08:42:06.294467 [TimerQueue.cpp:37] TimerQueue::handleRead() is aaaa=8, 1 at 2022-03-20 08:42:06
+[INFO]: 2022-03-20 08:42:06.294517 [EpollPoller.cpp:80] fd total count 2
+[INFO]: 2022-03-20 08:42:07.294588 [EpollPoller.cpp:87] 1 events happended
+[DEBUG]: 2022-03-20 08:42:07.294668 [Channel.cpp:86] 5: IN PRI 
+[INFO]: 2022-03-20 08:42:07.294706 [TimerQueue.cpp:37] TimerQueue::handleRead() is aaaa=8, 1 at 2022-03-20 08:42:07
+[INFO]: 2022-03-20 08:42:07.294748 [EpollPoller.cpp:80] fd total count 2
+[INFO]: 2022-03-20 08:42:08.294798 [EpollPoller.cpp:87] 1 events happended
+[DEBUG]: 2022-03-20 08:42:08.294887 [Channel.cpp:86] 5: IN PRI 
+[INFO]: 2022-03-20 08:42:08.294935 [TimerQueue.cpp:37] TimerQueue::handleRead() is aaaa=8, 1 at 2022-03-20 08:42:08
+[INFO]: 2022-03-20 08:42:08.294973 [EpollPoller.cpp:80] fd total count 2
+[INFO]: 2022-03-20 08:42:09.295019 [EpollPoller.cpp:87] 1 events happended
+[DEBUG]: 2022-03-20 08:42:09.295101 [Channel.cpp:86] 5: IN PRI 
+[INFO]: 2022-03-20 08:42:09.295139 [TimerQueue.cpp:37] TimerQueue::handleRead() is aaaa=8, 1 at 2022-03-20 08:42:09
+[INFO]: 2022-03-20 08:42:09.295181 [EpollPoller.cpp:80] fd total count 2
+[INFO]: 2022-03-20 08:42:10.295233 [EpollPoller.cpp:87] 1 events happended
+[DEBUG]: 2022-03-20 08:42:10.295331 [Channel.cpp:86] 5: IN PRI 
+[INFO]: 2022-03-20 08:42:10.295372 [TimerQueue.cpp:37] TimerQueue::handleRead() is aaaa=8, 1 at 2022-03-20 08:42:10
+[INFO]: 2022-03-20 08:42:10.295418 [EpollPoller.cpp:80] fd total count 2
+[INFO]: 2022-03-20 08:42:11.295463 [EpollPoller.cpp:87] 1 events happended
+[DEBUG]: 2022-03-20 08:42:11.295544 [Channel.cpp:86] 5: IN PRI 
+[INFO]: 2022-03-20 08:42:11.295583 [TimerQueue.cpp:37] TimerQueue::handleRead() is aaaa=8, 1 at 2022-03-20 08:42:11
+[INFO]: 2022-03-20 08:42:11.295624 [EpollPoller.cpp:80] fd total count 2
+[INFO]: 2022-03-20 08:42:12.295667 [EpollPoller.cpp:87] 1 events happended
+[DEBUG]: 2022-03-20 08:42:12.295747 [Channel.cpp:86] 5: IN PRI 
+[INFO]: 2022-03-20 08:42:12.295785 [TimerQueue.cpp:37] TimerQueue::handleRead() is aaaa=8, 1 at 2022-03-20 08:42:12
+[INFO]: 2022-03-20 08:42:12.295838 [EpollPoller.cpp:80] fd total count 2
+[INFO]: 2022-03-20 08:42:13.295873 [EpollPoller.cpp:87] 1 events happended
+[DEBUG]: 2022-03-20 08:42:13.295952 [Channel.cpp:86] 5: IN PRI 
+[INFO]: 2022-03-20 08:42:13.295989 [TimerQueue.cpp:37] TimerQueue::handleRead() is aaaa=8, 1 at 2022-03-20 08:42:13
+[INFO]: 2022-03-20 08:42:13.296033 [EpollPoller.cpp:80] fd total count 2
+[INFO]: 2022-03-20 08:42:14.296064 [EpollPoller.cpp:87] 1 events happended
+[DEBUG]: 2022-03-20 08:42:14.296142 [Channel.cpp:86] 5: IN PRI 
+[INFO]: 2022-03-20 08:42:14.296179 [TimerQueue.cpp:37] TimerQueue::handleRead() is aaaa=8, 1 at 2022-03-20 08:42:14
+[INFO]: 2022-03-20 08:42:14.296218 [EpollPoller.cpp:80] fd total count 2
+[INFO]: 2022-03-20 08:42:15.296253 [EpollPoller.cpp:87] 1 events happended
+[DEBUG]: 2022-03-20 08:42:15.296333 [Channel.cpp:86] 5: IN PRI 
+[INFO]: 2022-03-20 08:42:15.296369 [TimerQueue.cpp:37] TimerQueue::handleRead() is aaaa=8, 1 at 2022-03-20 08:42:15
+[INFO]: 2022-03-20 08:42:15.296401 [EpollPoller.cpp:80] fd total count 2
+[INFO]: 2022-03-20 08:42:16.296435 [EpollPoller.cpp:87] 1 events happended
+[DEBUG]: 2022-03-20 08:42:16.296516 [Channel.cpp:86] 5: IN PRI 
+[INFO]: 2022-03-20 08:42:16.296553 [TimerQueue.cpp:37] TimerQueue::handleRead() is aaaa=8, 1 at 2022-03-20 08:42:16
+[INFO]: 2022-03-20 08:42:16.296603 [EpollPoller.cpp:80] fd total count 2
+[INFO]: 2022-03-20 08:42:17.296632 [EpollPoller.cpp:87] 1 events happended
+[DEBUG]: 2022-03-20 08:42:17.296711 [Channel.cpp:86] 5: IN PRI 
+[INFO]: 2022-03-20 08:42:17.296747 [TimerQueue.cpp:37] TimerQueue::handleRead() is aaaa=8, 1 at 2022-03-20 08:42:17
+[INFO]: 2022-03-20 08:42:17.296795 [EpollPoller.cpp:80] fd total count 2
+[INFO]: 2022-03-20 08:42:18.296823 [EpollPoller.cpp:87] 1 events happended
+[DEBUG]: 2022-03-20 08:42:18.296902 [Channel.cpp:86] 5: IN PRI 
+[INFO]: 2022-03-20 08:42:18.296939 [TimerQueue.cpp:37] TimerQueue::handleRead() is aaaa=8, 1 at 2022-03-20 08:42:18
+[INFO]: 2022-03-20 08:42:18.296980 [EpollPoller.cpp:80] fd total count 2
+[INFO]: 2022-03-20 08:42:19.297032 [EpollPoller.cpp:87] 1 events happended
+[DEBUG]: 2022-03-20 08:42:19.297113 [Channel.cpp:86] 5: IN PRI 
+[INFO]: 2022-03-20 08:42:19.297151 [TimerQueue.cpp:37] TimerQueue::handleRead() is aaaa=8, 1 at 2022-03-20 08:42:19
+[INFO]: 2022-03-20 08:42:19.297204 [EpollPoller.cpp:80] fd total count 2
+[INFO]: 2022-03-20 08:42:20.297251 [EpollPoller.cpp:87] 1 events happended
+[DEBUG]: 2022-03-20 08:42:20.297332 [Channel.cpp:86] 5: IN PRI 
+[INFO]: 2022-03-20 08:42:20.297370 [TimerQueue.cpp:37] TimerQueue::handleRead() is aaaa=8, 1 at 2022-03-20 08:42:20
+[INFO]: 2022-03-20 08:42:20.297412 [EpollPoller.cpp:80] fd total count 2
+[INFO]: 2022-03-20 08:42:21.297461 [EpollPoller.cpp:87] 1 events happended
+[DEBUG]: 2022-03-20 08:42:21.297540 [Channel.cpp:86] 5: IN PRI 
+[INFO]: 2022-03-20 08:42:21.297577 [TimerQueue.cpp:37] TimerQueue::handleRead() is aaaa=8, 1 at 2022-03-20 08:42:21
+[INFO]: 2022-03-20 08:42:21.297619 [EpollPoller.cpp:80] fd total count 2
+[INFO]: 2022-03-20 08:42:22.297665 [EpollPoller.cpp:87] 1 events happended
+[DEBUG]: 2022-03-20 08:42:22.297744 [Channel.cpp:86] 5: IN PRI 
+[INFO]: 2022-03-20 08:42:22.297781 [TimerQueue.cpp:37] TimerQueue::handleRead() is aaaa=8, 1 at 2022-03-20 08:42:22
+[INFO]: 2022-03-20 08:42:22.297821 [EpollPoller.cpp:80] fd total count 2
+[INFO]: 2022-03-20 08:42:23.297849 [EpollPoller.cpp:87] 1 events happended
+[DEBUG]: 2022-03-20 08:42:23.297929 [Channel.cpp:86] 5: IN PRI 
+[INFO]: 2022-03-20 08:42:23.297966 [TimerQueue.cpp:37] TimerQueue::handleRead() is aaaa=8, 1 at 2022-03-20 08:42:23
+[INFO]: 2022-03-20 08:42:23.298006 [EpollPoller.cpp:80] fd total count 2
+[INFO]: 2022-03-20 08:42:24.298031 [EpollPoller.cpp:87] 1 events happended
+[DEBUG]: 2022-03-20 08:42:24.298109 [Channel.cpp:86] 5: IN PRI 
+[INFO]: 2022-03-20 08:42:24.298145 [TimerQueue.cpp:37] TimerQueue::handleRead() is aaaa=8, 1 at 2022-03-20 08:42:24
+[INFO]: 2022-03-20 08:42:24.298185 [EpollPoller.cpp:80] fd total count 2
+[INFO]: 2022-03-20 08:42:25.298157 [EpollPoller.cpp:87] 1 events happended
+[DEBUG]: 2022-03-20 08:42:25.298234 [Channel.cpp:86] 5: IN PRI 
+[INFO]: 2022-03-20 08:42:25.298287 [TimerQueue.cpp:37] TimerQueue::handleRead() is aaaa=8, 1 at 2022-03-20 08:42:25
+[INFO]: 2022-03-20 08:42:25.298326 [EpollPoller.cpp:80] fd total count 2
+[INFO]: 2022-03-20 08:42:26.298354 [EpollPoller.cpp:87] 1 events happended
+[DEBUG]: 2022-03-20 08:42:26.298435 [Channel.cpp:86] 5: IN PRI 
+[INFO]: 2022-03-20 08:42:26.298473 [TimerQueue.cpp:37] TimerQueue::handleRead() is aaaa=8, 1 at 2022-03-20 08:42:26
+[INFO]: 2022-03-20 08:42:26.298515 [EpollPoller.cpp:80] fd total count 2
+[INFO]: 2022-03-20 08:42:27.298543 [EpollPoller.cpp:87] 1 events happended
+[DEBUG]: 2022-03-20 08:42:27.298623 [Channel.cpp:86] 5: IN PRI 
+[INFO]: 2022-03-20 08:42:27.298661 [TimerQueue.cpp:37] TimerQueue::handleRead() is aaaa=8, 1 at 2022-03-20 08:42:27
+[INFO]: 2022-03-20 08:42:27.298709 [EpollPoller.cpp:80] fd total count 2
+[INFO]: 2022-03-20 08:42:28.298729 [EpollPoller.cpp:87] 1 events happended
+[DEBUG]: 2022-03-20 08:42:28.298831 [Channel.cpp:86] 5: IN PRI 
+[INFO]: 2022-03-20 08:42:28.298878 [TimerQueue.cpp:37] TimerQueue::handleRead() is aaaa=8, 1 at 2022-03-20 08:42:28
+[INFO]: 2022-03-20 08:42:28.298919 [EpollPoller.cpp:80] fd total count 2
+[INFO]: 2022-03-20 08:42:29.298943 [EpollPoller.cpp:87] 1 events happended
+[DEBUG]: 2022-03-20 08:42:29.299023 [Channel.cpp:86] 5: IN PRI 
+[INFO]: 2022-03-20 08:42:29.299061 [TimerQueue.cpp:37] TimerQueue::handleRead() is aaaa=8, 1 at 2022-03-20 08:42:29
+[INFO]: 2022-03-20 08:42:29.299103 [EpollPoller.cpp:80] fd total count 2
+[INFO]: 2022-03-20 08:42:30.299082 [EpollPoller.cpp:87] 1 events happended
+[DEBUG]: 2022-03-20 08:42:30.299164 [Channel.cpp:86] 5: IN PRI 
+[INFO]: 2022-03-20 08:42:30.299202 [TimerQueue.cpp:37] TimerQueue::handleRead() is aaaa=8, 1 at 2022-03-20 08:42:30
+[INFO]: 2022-03-20 08:42:30.299243 [EpollPoller.cpp:80] fd total count 2
+[INFO]: 2022-03-20 08:42:31.299270 [EpollPoller.cpp:87] 1 events happended
+[DEBUG]: 2022-03-20 08:42:31.299351 [Channel.cpp:86] 5: IN PRI 
+[INFO]: 2022-03-20 08:42:31.299389 [TimerQueue.cpp:37] TimerQueue::handleRead() is aaaa=8, 1 at 2022-03-20 08:42:31
+[INFO]: 2022-03-20 08:42:31.299431 [EpollPoller.cpp:80] fd total count 2
+[INFO]: 2022-03-20 08:42:32.299454 [EpollPoller.cpp:87] 1 events happended
+[DEBUG]: 2022-03-20 08:42:32.299535 [Channel.cpp:86] 5: IN PRI 
+[INFO]: 2022-03-20 08:42:32.299573 [TimerQueue.cpp:37] TimerQueue::handleRead() is aaaa=8, 1 at 2022-03-20 08:42:32
+[INFO]: 2022-03-20 08:42:32.299616 [EpollPoller.cpp:80] fd total count 2
+[INFO]: 2022-03-20 08:42:33.299638 [EpollPoller.cpp:87] 1 events happended
+[DEBUG]: 2022-03-20 08:42:33.299719 [Channel.cpp:86] 5: IN PRI 
+[INFO]: 2022-03-20 08:42:33.299757 [TimerQueue.cpp:37] TimerQueue::handleRead() is aaaa=8, 1 at 2022-03-20 08:42:33
+[INFO]: 2022-03-20 08:42:33.299800 [EpollPoller.cpp:80] fd total count 2
+[INFO]: 2022-03-20 08:42:34.299820 [EpollPoller.cpp:87] 1 events happended
+[DEBUG]: 2022-03-20 08:42:34.299902 [Channel.cpp:86] 5: IN PRI 
+[INFO]: 2022-03-20 08:42:34.299940 [TimerQueue.cpp:37] TimerQueue::handleRead() is aaaa=8, 1 at 2022-03-20 08:42:34
+[INFO]: 2022-03-20 08:42:34.299996 [EpollPoller.cpp:80] fd total count 2
+[INFO]: 2022-03-20 08:42:35.300030 [EpollPoller.cpp:87] 1 events happended
+[DEBUG]: 2022-03-20 08:42:35.300118 [Channel.cpp:86] 5: IN PRI 
+[INFO]: 2022-03-20 08:42:35.300155 [TimerQueue.cpp:37] TimerQueue::handleRead() is aaaa=8, 1 at 2022-03-20 08:42:35
+[INFO]: 2022-03-20 08:42:35.300219 [EpollPoller.cpp:80] fd total count 2
+[INFO]: 2022-03-20 08:42:36.300256 [EpollPoller.cpp:87] 1 events happended
+[DEBUG]: 2022-03-20 08:42:36.300335 [Channel.cpp:86] 5: IN PRI 
+[INFO]: 2022-03-20 08:42:36.300371 [TimerQueue.cpp:37] TimerQueue::handleRead() is aaaa=8, 1 at 2022-03-20 08:42:36
+[INFO]: 2022-03-20 08:42:36.300433 [EpollPoller.cpp:80] fd total count 2
+[INFO]: 2022-03-20 08:42:37.300473 [EpollPoller.cpp:87] 1 events happended
+[DEBUG]: 2022-03-20 08:42:37.300555 [Channel.cpp:86] 5: IN PRI 
+[INFO]: 2022-03-20 08:42:37.300592 [TimerQueue.cpp:37] TimerQueue::handleRead() is aaaa=8, 1 at 2022-03-20 08:42:37
+[INFO]: 2022-03-20 08:42:37.300634 [EpollPoller.cpp:80] fd total count 2
+[INFO]: 2022-03-20 08:42:38.300652 [EpollPoller.cpp:87] 1 events happended
+[DEBUG]: 2022-03-20 08:42:38.300733 [Channel.cpp:86] 5: IN PRI 
+[INFO]: 2022-03-20 08:42:38.300771 [TimerQueue.cpp:37] TimerQueue::handleRead() is aaaa=8, 1 at 2022-03-20 08:42:38
+[INFO]: 2022-03-20 08:42:38.300812 [EpollPoller.cpp:80] fd total count 2
+[INFO]: 2022-03-20 08:42:39.300822 [EpollPoller.cpp:87] 1 events happended
+[DEBUG]: 2022-03-20 08:42:39.300901 [Channel.cpp:86] 5: IN PRI 
+[INFO]: 2022-03-20 08:42:39.300937 [TimerQueue.cpp:37] TimerQueue::handleRead() is aaaa=8, 1 at 2022-03-20 08:42:39
+[INFO]: 2022-03-20 08:42:39.301001 [EpollPoller.cpp:80] fd total count 2
+[INFO]: 2022-03-20 08:42:40.301016 [EpollPoller.cpp:87] 1 events happended
+[DEBUG]: 2022-03-20 08:42:40.301097 [Channel.cpp:86] 5: IN PRI 
+[INFO]: 2022-03-20 08:42:40.301151 [TimerQueue.cpp:37] TimerQueue::handleRead() is aaaa=8, 1 at 2022-03-20 08:42:40
+[INFO]: 2022-03-20 08:42:40.301219 [EpollPoller.cpp:80] fd total count 2
+[INFO]: 2022-03-20 08:42:41.301189 [EpollPoller.cpp:87] 1 events happended
+[DEBUG]: 2022-03-20 08:42:41.301272 [Channel.cpp:86] 5: IN PRI 
+[INFO]: 2022-03-20 08:42:41.301310 [TimerQueue.cpp:37] TimerQueue::handleRead() is aaaa=8, 1 at 2022-03-20 08:42:41
+[INFO]: 2022-03-20 08:42:41.301363 [EpollPoller.cpp:80] fd total count 2
+[INFO]: 2022-03-20 08:42:42.301370 [EpollPoller.cpp:87] 1 events happended
+[DEBUG]: 2022-03-20 08:42:42.301448 [Channel.cpp:86] 5: IN PRI 
+[INFO]: 2022-03-20 08:42:42.301485 [TimerQueue.cpp:37] TimerQueue::handleRead() is aaaa=8, 1 at 2022-03-20 08:42:42
+[INFO]: 2022-03-20 08:42:42.301530 [EpollPoller.cpp:80] fd total count 2
+[INFO]: 2022-03-20 08:42:43.301532 [EpollPoller.cpp:87] 1 events happended
+[DEBUG]: 2022-03-20 08:42:43.301611 [Channel.cpp:86] 5: IN PRI 
+[INFO]: 2022-03-20 08:42:43.301647 [TimerQueue.cpp:37] TimerQueue::handleRead() is aaaa=8, 1 at 2022-03-20 08:42:43
+[INFO]: 2022-03-20 08:42:43.301690 [EpollPoller.cpp:80] fd total count 2
+[INFO]: 2022-03-20 08:42:44.301695 [EpollPoller.cpp:87] 1 events happended
+[DEBUG]: 2022-03-20 08:42:44.301772 [Channel.cpp:86] 5: IN PRI 
+[INFO]: 2022-03-20 08:42:44.301808 [TimerQueue.cpp:37] TimerQueue::handleRead() is aaaa=8, 1 at 2022-03-20 08:42:44

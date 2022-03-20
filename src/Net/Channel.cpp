@@ -1,23 +1,26 @@
 #include "Channel.hpp"
-#include "Log.hpp"
+
 #include <assert.h>
-#include "EventLoop.hpp"
 #include <sys/epoll.h>
+#include <sstream>
+
+#include "EventLoop.hpp"
+#include "SocketOps.hpp"
+#include "Log.hpp"
 
 const int Channel::k_none_event_ = 0;
 const int Channel::k_read_event_ = EPOLLIN | EPOLLPRI;
 const int Channel::k_write_event_ = EPOLLOUT;
 
-Channel::Channel(EventLoop* loop, int fd) : 
-    loop_(loop),
-    fd_(fd),
-    events_(0),
-    real_events_(0),
-    index_(-1),
-    eventHandling_(false),
-    addedToLoop_(false),
-    tied_(false) {
-
+Channel::Channel(EventLoop* loop, int fd) : loop_(loop),
+                                            fd_(fd),
+                                            events_(0),
+                                            real_events_(0),
+                                            index_(-1),
+                                            eventHandling_(false),
+                                            addedToLoop_(false),
+                                            logHup_(true),
+                                            tied_(false) {
 }
 
 Channel::~Channel() {
@@ -41,20 +44,52 @@ void Channel::tie(const std::shared_ptr<void>& obj) {
 
 void Channel::remove() {
     if (is_none_event()) {
+        addedToLoop_ = false;
         loop_->remove_channel(this);
     }
 }
 
 void Channel::update() {
+    addedToLoop_ = true;
     loop_->update_channel(this);
+}
+
+std::string Channel::reventToString() const {
+    return eventToString(fd_, real_events_);
+}
+
+std::string Channel::eventsToString() const {
+    return eventToString(fd_, events_);
+}
+
+std::string Channel::eventToString(int fd, int ev) {
+    std::ostringstream oss;
+    oss << fd << ": ";
+    if (ev & EPOLLIN)
+        oss << "IN ";
+    if (ev & EPOLLPRI)
+        oss << "PRI ";
+    if (ev & EPOLLOUT)
+        oss << "OUT ";
+    if (ev & EPOLLHUP)
+        oss << "HUP ";
+    if (ev & EPOLLRDHUP)
+        oss << "RDHUP ";
+    if (ev & EPOLLERR)
+        oss << "ERR ";
+    return oss.str();
 }
 
 // 处理回调函数
 void Channel::handle_event_withGuard(TimeStamp receive_time) {
-    // LOG_INFO("channel handleEvent revents: %d\n", real_events_);
+    eventHandling_ = true;
+    LOG_DEBUG("%s", reventToString().c_str());
 
-    // 断开连接
-    if ( (real_events_ & EPOLLHUP) && !(real_events_ & EPOLLIN)) {
+    // 连接被挂起
+    if ((real_events_ & EPOLLHUP) && !(real_events_ & EPOLLIN)) {
+        if (logHup_) {
+            LOG_WARN("fd = %d Channel::handle_event() EPOLLHUP", fd_);
+        }
         if (closeCallback_) {
             closeCallback_();
         }
@@ -80,4 +115,5 @@ void Channel::handle_event_withGuard(TimeStamp receive_time) {
             writeCallback_();
         }
     }
+    eventHandling_ = false;
 }

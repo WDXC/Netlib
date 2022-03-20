@@ -2,16 +2,19 @@
 #include <assert.h>
 #include <string.h>
 
-EventLoop* CheckKoopNotNull(EventLoop* loop) {
-    if (loop == nullptr) {
-        LOG_ERROR("%s:%s:%d mainloop is null \n", __FILE__, __FUNCTION__, __LINE__);
+namespace check {
+    EventLoop* CheckLoopNotNull(EventLoop* loop) {
+        if (loop == nullptr) {
+            LOG_ERROR("%s:%s:%d mainloop is null \n", __FILE__, __FUNCTION__, __LINE__);
+        }
+        return loop;
     }
-    return loop;
 }
+
 
 TcpServer::TcpServer(EventLoop* loop, const InetAddress& listenaddr,
                      const std::string& name, Option option) : 
-    loop_(loop),
+    loop_(check::CheckLoopNotNull(loop)),
     ip_port(listenaddr.get_ip_port()),
     name_(name),
     acceptor_(new Acceptor(loop, listenaddr, option=k_reuse_port)),

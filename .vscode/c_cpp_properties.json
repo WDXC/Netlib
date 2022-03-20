@@ -1,0 +1,23 @@
+{
+    "configurations": [
+        {
+            "name": "Linux",
+            "includePath": [
+                "${workspaceFolder}/**",
+                "/home/neil/mine/MyProject/C++/multhread/include/Base/",
+                "/home/neil/mine/MyProject/C++/multhread/include/Log/",
+                "/home/neil/mine/MyProject/C++/multhread/include/Net/",
+                "/home/neil/mine/MyProject/C++/multhread/include/rapidjson/",
+                "/home/neil/mine/MyProject/C++/multhread/include/Socket/",
+                "/home/neil/mine/MyProject/C++/multhread/include/Thread/",
+                "/home/neil/mine/MyProject/C++/multhread/include/Timer/"
+            ],
+            "defines": [],
+            "compilerPath": "/usr/bin/clang-10",
+            "cStandard": "c11",
+            "cppStandard": "c++14",
+            "intelliSenseMode": "linux-clang-x64"
+        }
+    ],
+    "version": 4
+}

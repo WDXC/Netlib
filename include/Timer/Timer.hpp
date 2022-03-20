@@ -6,6 +6,7 @@
 #include <stdint.h>
 #include <sys/time.h>
 #include <functional>
+#include <atomic>
 #include "../Base/NonCopyable.hpp"
 #include "TimeStamp.hpp"
 
@@ -18,12 +19,21 @@ class Timer : NoCopyable {
         void restart(TimeStamp now);
         TimeStamp expiration() const {return m_expiration;}
         bool repeat() const { return m_repeat;}
+        int64_t sequence() const {
+            return sequence_;
+        }
+        int64_t numCreated() {
+            return s_numCreated_;
+        }
 
     private:
         const TimerCallback timerCallbac_;
         TimeStamp m_expiration;
         const double m_interval;
         const bool m_repeat;
+        const int64_t sequence_;
+
+        std::atomic_int64_t s_numCreated_;
 };
 
 #endif

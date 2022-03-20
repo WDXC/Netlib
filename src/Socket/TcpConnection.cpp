@@ -1,15 +1,16 @@
-#include "TcpConnection.hpp"
-#include "Log.hpp"
-#include "Socket.hpp"
-#include "SocketOps.hpp"
-#include "EventLoop.hpp"
-#include "Channel.hpp"
 
-#include <functional>
+#include <errno.h>
 #include <sys/socket.h>
 #include <sys/types.h>
-#include <iostream>
-#include <errno.h>
+#include <functional>
+
+#include "Log.hpp"
+#include "Socket.hpp"
+#include "Channel.hpp"
+#include "EventLoop.hpp"
+#include "SocketOps.hpp"
+#include "WeakCallback.hpp"
+#include "TcpConnection.hpp"
 
 static EventLoop* CheckLoopNotNull(EventLoop* loop) {
     if (!loop) {
@@ -20,27 +21,26 @@ static EventLoop* CheckLoopNotNull(EventLoop* loop) {
 
 TcpConnection::TcpConnection(EventLoop* loop, const std::string name, int sockfd,
                              const InetAddress& localaddr,
-                             const InetAddress& peeraddr) : 
-    loop_(CheckLoopNotNull(loop)),
-    name_(name),
-		state_(k_connecting),
-    socket_(new Socket(sockfd)), 
-    channel_(new Channel(loop, sockfd)),
-    localaddr_(localaddr),
-    peeraddr_(peeraddr) {
-        channel_->setReadCallback(std::bind(&TcpConnection::handle_read, this, std::placeholders::_1));
-        channel_->setWriteCallback(std::bind(&TcpConnection::handle_write, this));
-        channel_->setErrorCallback(std::bind(&TcpConnection::handle_error, this));
-        channel_->setCloseCallback(std::bind(&TcpConnection::handle_close, this));
-        LOG_DEBUG("Tcp connect::ctor[%s] at fd = %d\n", name.c_str(), sockfd);
+                             const InetAddress& peeraddr) : loop_(CheckLoopNotNull(loop)),
+                                                            name_(name),
+                                                            state_(k_connecting),
+                                                            socket_(new Socket(sockfd)),
+                                                            channel_(new Channel(loop, sockfd)),
+                                                            localaddr_(localaddr),
+                                                            peeraddr_(peeraddr) {
+    channel_->setReadCallback(std::bind(&TcpConnection::handle_read, this, std::placeholders::_1));
+    channel_->setWriteCallback(std::bind(&TcpConnection::handle_write, this));
+    channel_->setErrorCallback(std::bind(&TcpConnection::handle_error, this));
+    channel_->setCloseCallback(std::bind(&TcpConnection::handle_close, this));
+    LOG_DEBUG("Tcp connect::ctor[%s] at fd = %d\n", name.c_str(), sockfd);
 
-        socket_->set_keepAlive(true);
+    socket_->set_keepAlive(true);
 }
 
 TcpConnection::~TcpConnection() {
     LOG_DEBUG("tcp connection::dtor[%s] at fd = %d state %d \n", name_.c_str(),
-                                                                channel_->get_fd(),
-                                                                (int)state_);
+              channel_->get_fd(),
+              (int)state_);
 }
 
 void TcpConnection::send(const std::string& buf) {
@@ -51,7 +51,7 @@ void TcpConnection::send(const std::string& buf) {
         } else {
             void (TcpConnection::*fp)(const std::string& message) = &TcpConnection::send_inLoop;
             loop_->run_in_loop(std::bind(fp,
-                                         this, 
+                                         this,
                                          buf));
         }
     }
@@ -66,17 +66,17 @@ void TcpConnection::send(Buffer* buf) {
         } else {
             void (TcpConnection::*fp)(const std::string& message) = &TcpConnection::send_inLoop;
             loop_->run_in_loop(std::bind(fp,
-                                         this, 
+                                         this,
                                          buf->retrieve_asString()));
         }
     }
 }
 
-void TcpConnection::send_inLoop (const std::string& buf) {
+void TcpConnection::send_inLoop(const std::string& buf) {
     send_inLoop(buf, buf.size());
 }
 
-void TcpConnection::send_inLoop (const std::string& buf, size_t remaining) {
+void TcpConnection::send_inLoop(const std::string& buf, size_t remaining) {
     ssize_t nwrote = 0;
     bool error = false;
 
@@ -110,11 +110,11 @@ void TcpConnection::send_inLoop (const std::string& buf, size_t remaining) {
         // 剩余长度
         size_t leaveLen = output_buffer_.readable_bytes();
         if (leaveLen + remaining >= highWaterMark_ && leaveLen < highWaterMark_) {
-            loop_->queue_in_loop(std::bind(highWaterCallback_, shared_from_this(), leaveLen+remaining));
+            loop_->queue_in_loop(std::bind(highWaterCallback_, shared_from_this(), leaveLen + remaining));
         }
         output_buffer_.append(buf.c_str() + nwrote, remaining);
         if (!channel_->is_writing()) {
-            channel_->enable_writing(); // 注册channel 写事件,否则poller不会通知
+            channel_->enable_writing();  // 注册channel 写事件,否则poller不会通知
         }
     }
 }
@@ -131,7 +131,7 @@ void TcpConnection::shutdown_inLoop() {
     // 当前outputbuffer中数据，全部发送完成
     loop_->assertInLoopThread();
     if (!channel_->is_writing()) {
-        socket_->shutdown_write(); // 关闭写端
+        socket_->shutdown_write();  // 关闭写端
     }
 }
 
@@ -145,94 +145,127 @@ void TcpConnection::establish_connect() {
     connectionCallback_(shared_from_this());
 }
 
- void TcpConnection::destory_connect() {
-     loop_->assertInLoopThread();
-     if (state_ == k_connected) {
-         set_state(k_disconnected);
-         channel_->dis_enable_all();
-         connectionCallback_(shared_from_this());
-     }
-     channel_->remove();
- }
+void TcpConnection::destory_connect() {
+    loop_->assertInLoopThread();
+    if (state_ == k_connected) {
+        set_state(k_disconnected);
+        channel_->dis_enable_all();
+        connectionCallback_(shared_from_this());
+    }
+    channel_->remove();
+}
 
- void TcpConnection::startRead() {
-     loop_->run_in_loop(std::bind(&TcpConnection::startReadInLoop, this));
- }
+void TcpConnection::forceClose() {
+    if (state_ == k_connected || state_ == k_disconnecting) {
+        set_state(k_disconnecting);
+        loop_->queue_in_loop(std::bind(
+            &TcpConnection::forceClose,
+            shared_from_this()
+        ));
+    }
+}
 
- void TcpConnection::startReadInLoop() {
-     loop_->assertInLoopThread();
-     if (!reading_ || !channel_->is_reading()) {
-         channel_->enable_reading();
-         reading_ = true;
-     }
- }
+void TcpConnection::forceCloseWithDelay(double seconds) {
+    if (state_ == k_connected || state_ == k_disconnecting) {
+        set_state(k_disconnecting);
+        loop_->runAfter(
+            seconds,
+            makeWeakCallback(shared_from_this(),
+                             &TcpConnection::forceClose)
+        );
+    }
+}
 
- void TcpConnection::stopRead() {
-     loop_->run_in_loop(std::bind(&TcpConnection::stopReadInLoop, this));
- }
+void TcpConnection::forceCloseInLoop () {
+    loop_->assertInLoopThread();
+    if (state_ == k_connected || state_ == k_disconnecting) {
+        handle_close();
+    }
+}
 
- void TcpConnection::stopReadInLoop() {
-     loop_->assertInLoopThread();
-     if (reading_ || channel_->is_reading()) {
-         channel_->dis_enable_reading();
-         reading_ = false;
-     }
- }
+void TcpConnection::setTcpNoDelay(bool on) {
+    socket_->set_tcp_noDelay(on);
+}
 
- void TcpConnection::handle_read (TimeStamp receive_time) {
-     int save_errno = 0;
-     ssize_t n = input_buffer_.readfd(channel_->get_fd(), &save_errno);
-     if (n > 0) {
-         messageCallback_(shared_from_this(), &input_buffer_, receive_time);
-     } else if (n == 0) {
-         handle_close();
-     } else {
-         errno = save_errno;
-         LOG_ERROR("tcp connection::handle read\n");
-         handle_error();
-     }
- }
+void TcpConnection::startRead() {
+    loop_->run_in_loop(std::bind(&TcpConnection::startReadInLoop, this));
+}
 
- void TcpConnection::handle_write () {
-     if (channel_->is_writing()) {
-         int save_errno = 0;
-         ssize_t n = output_buffer_.writefd(channel_->get_fd(), &save_errno);
-         if (n > 0) {
-             // 发送成功
-             output_buffer_.retrieve(n);
-             if (output_buffer_.readable_bytes() == 0) {
-                 channel_->dis_enable_writing();
-                 // 写完成 
-                 if (writeCallback_) {
-                     loop_->queue_in_loop(std::bind(writeCallback_, shared_from_this()));
-                 }
-                 // 正在关闭
-                 if (state_ == k_disconnecting) {
-                     shutdown_inLoop();
-                 }
-             }
-         } else {
-             LOG_ERROR("tcp connection::handle write\n");
-         }
-     } else { // 不可写
+void TcpConnection::startReadInLoop() {
+    loop_->assertInLoopThread();
+    if (!reading_ || !channel_->is_reading()) {
+        channel_->enable_reading();
+        reading_ = true;
+    }
+}
+
+void TcpConnection::stopRead() {
+    loop_->run_in_loop(std::bind(&TcpConnection::stopReadInLoop, this));
+}
+
+void TcpConnection::stopReadInLoop() {
+    loop_->assertInLoopThread();
+    if (reading_ || channel_->is_reading()) {
+        channel_->dis_enable_reading();
+        reading_ = false;
+    }
+}
+
+void TcpConnection::handle_read(TimeStamp receive_time) {
+    int save_errno = 0;
+    ssize_t n = input_buffer_.readfd(channel_->get_fd(), &save_errno);
+		// 在此处判断是否接收完全
+    if (n > 0) {
+        messageCallback_(shared_from_this(), &input_buffer_, receive_time);
+    } else if (n == 0) {
+        handle_close();
+    } else {
+        errno = save_errno;
+        LOG_ERROR("tcp connection::handle read\n");
+        handle_error();
+    }
+}
+
+void TcpConnection::handle_write() {
+    if (channel_->is_writing()) {
+        int save_errno = 0;
+        ssize_t n = output_buffer_.writefd(channel_->get_fd(), &save_errno);
+        if (n > 0) {
+            // 发送成功
+            output_buffer_.retrieve(n);
+            if (output_buffer_.readable_bytes() == 0) {
+                channel_->dis_enable_writing();
+                // 写完成
+                if (writeCallback_) {
+                    loop_->queue_in_loop(std::bind(writeCallback_, shared_from_this()));
+                }
+                // 正在关闭
+                if (state_ == k_disconnecting) {
+                    shutdown_inLoop();
+                }
+            }
+        } else {
+            LOG_ERROR("tcp connection::handle write\n");
+        }
+    } else {  // 不可写
         LOG_ERROR("tcp connection fd = %d is down, no more send\n", channel_->get_fd());
-     }
- }
+    }
+}
 
- void TcpConnection::handle_close () {
-     LOG_INFO(" handle_close fd=%d state=%d", channel_->get_fd(), (int)state_);
-     assert(state_ == k_connected || state_ == k_disconnecting);
+void TcpConnection::handle_close() {
+    LOG_INFO(" handle_close fd=%d state=%d", channel_->get_fd(), (int)state_);
+    assert(state_ == k_connected || state_ == k_disconnecting);
 
-     set_state(k_disconnected);
-     channel_->dis_enable_all();
+    set_state(k_disconnected);
+    channel_->dis_enable_all();
 
-     TcpConnectionPtr connect_ptr(shared_from_this());
+    TcpConnectionPtr connect_ptr(shared_from_this());
 
-     connectionCallback_(connect_ptr);
-     closeCallback_(connect_ptr);
- }
+    connectionCallback_(connect_ptr);
+    closeCallback_(connect_ptr);
+}
 
- void TcpConnection::handle_error () {
-     int err = sockets::getSocketError(channel_->get_fd());
-     LOG_ERROR("tcp connection handle error name: %s S0_ERROR:%d\n", name_.c_str(), err);
- }
+void TcpConnection::handle_error() {
+    int err = sockets::getSocketError(channel_->get_fd());
+    LOG_ERROR("tcp connection handle error name: %s S0_ERROR:%d\n", name_.c_str(), err);
+}

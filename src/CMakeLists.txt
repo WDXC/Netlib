@@ -19,10 +19,7 @@ SET(CMAKE_CXX_FLAGS_RELEASE "$ENV{CXXFLAGS} -O3 -Wall")
 
 file(GLOB_RECURSE native_srcs ./*.cpp)
 
-file(GLOB_RECURSE include_file ${PROJECT_SOURCE_DIR}/include/*.hpp)
-
-
-add_library(Net STATIC ${native_srcs} ${include_file})
+add_library(Net STATIC ${native_srcs})
 
 find_package(Threads)
 

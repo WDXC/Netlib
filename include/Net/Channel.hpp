@@ -80,6 +80,10 @@ class Channel : NoCopyable {
         bool is_none_event() const { return events_ == k_none_event_; }
         bool is_writing() const { return events_ & k_write_event_; }
         bool is_reading() const { return events_ & k_read_event_; }
+
+        // for debug
+        std::string reventToString() const;
+        std::string eventsToString() const;
     
     public:
         // 设置发生不同事件的回调操作
@@ -98,6 +102,8 @@ class Channel : NoCopyable {
     private: 
         void update();
         void handle_event_withGuard(TimeStamp receive_time);
+        static std::string eventToString(int fd, int ev);
+
     private:
         static const int k_none_event_;
         static const int k_read_event_;
@@ -111,6 +117,7 @@ class Channel : NoCopyable {
         int index_;
         bool eventHandling_;
         bool addedToLoop_;
+        bool logHup_;
 
         std::weak_ptr<void> tie_;
         bool tied_;

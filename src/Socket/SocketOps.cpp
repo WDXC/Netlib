@@ -84,6 +84,12 @@ void sockets::shutdownwrite(int sockfd) {
     }
 }
 
+void sockets::shutAll(int sockfd) {
+    if (::shutdown(sockfd, SHUT_RDWR) < 0) {
+        LOG_ERROR("shut write & read error: %d " , errno);
+    }
+}
+
 int sockets::getSocketError(int sockfd) {
     int optval;
     socklen_t optlen = static_cast<socklen_t>(sizeof optval);

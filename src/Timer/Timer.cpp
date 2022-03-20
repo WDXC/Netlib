@@ -4,8 +4,9 @@ Timer::Timer(TimerCallback cb, TimeStamp when, double interval) :
     timerCallbac_(std::move(cb)),
     m_expiration(when),
     m_interval(interval),
-    m_repeat(interval > 0) {
-
+    m_repeat(interval > 0),
+    s_numCreated_(0),
+    sequence_(++s_numCreated_) {
 }
 
 void Timer::restart(TimeStamp now) {

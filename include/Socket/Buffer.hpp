@@ -46,7 +46,8 @@ class Buffer : NoCopyable {
         
         // 缓冲区复位
         void retrieve_all() {
-            read_index_ = write_index_ = k_cheap_prepend;
+            read_index_ = k_cheap_prepend;
+            write_index_ = k_cheap_prepend;
         }
 
         // 读取所有信息

@@ -1,18 +1,18 @@
+#include <fcntl.h>
+#include <sys/stat.h>
+#include <sys/types.h>
+#include <unistd.h>
+
 #include "Acceptor.hpp"
 #include "InetAddress.hpp"
-#include "SocketOps.hpp"
 #include "Log.hpp"
-#include <unistd.h>
-#include <fcntl.h>
-#include <sys/types.h>
-#include <sys/stat.h>
+#include "SocketOps.hpp"
 
-Acceptor::Acceptor(EventLoop* loop, const InetAddress& addr, bool reuseport) : 
-    m_loop(loop),
-    m_acceptSocket(sockets::createNooBlockingSocket()),
-    m_acceptChannel(m_loop, m_acceptSocket.fd()),
-		listening_(false),
-		idleFd_(::open("/dev/null", O_RDONLY | O_CLOEXEC)) {
+Acceptor::Acceptor(EventLoop* loop, const InetAddress& addr, bool reuseport) : m_loop(loop),
+                                                                               m_acceptSocket(sockets::createNooBlockingSocket()),
+                                                                               m_acceptChannel(m_loop, m_acceptSocket.fd()),
+                                                                               listening_(false),
+                                                                               idleFd_(::open("/dev/null", O_RDONLY | O_CLOEXEC)) {
     m_acceptSocket.set_reuseAddr(true);
     m_acceptSocket.set_reusePort(true);
     m_acceptSocket.bindAddress(addr);
@@ -27,12 +27,12 @@ Acceptor::~Acceptor() {
 
 void Acceptor::listen() {
     m_loop->assertInLoopThread();
-		listening_ = true;
+    listening_ = true;
     m_acceptSocket.listenAddress();
     m_acceptChannel.enable_reading();
 }
 
-void Acceptor::handleRead () {
+void Acceptor::handleRead() {
     m_loop->assertInLoopThread();
     InetAddress peerAddress;
     int connfd = m_acceptSocket.acceptAddress(&peerAddress);

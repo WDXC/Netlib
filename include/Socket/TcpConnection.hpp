@@ -69,6 +69,11 @@ class TcpConnection : NoCopyable,
         // 销毁连接
         void destory_connect();
 
+        // 强制关闭
+        void forceClose();
+        void forceCloseWithDelay(double seconds);
+        void setTcpNoDelay(bool on);
+
         // 设置回调
         void setCloseCallback(const CloseCallback& cb) {
             closeCallback_ = cb;
@@ -114,6 +119,7 @@ class TcpConnection : NoCopyable,
         void send_inLoop(const std::string& buf);
         void send_inLoop(const std::string& buf, size_t len);
         void shutdown_inLoop();
+        void forceCloseInLoop();
 
     private:
         EventLoop* loop_;

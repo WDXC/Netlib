@@ -62,5 +62,14 @@
         "shared_mutex": "cpp",
         "variant": "cpp",
         "*.rh": "cpp"
-    }
+    },
+    "clang.cxxflags": [
+        "-I${workspaceRoot}/include/Base",
+        "-I${workspaceRoot}/include/Log",
+        "-I${workspaceRoot}/include/Net",
+        "-I${workspaceRoot}/include/rapidjson",
+        "-I${workspaceRoot}/include/Socket",
+        "-I${workspaceRoot}/include/Thread",
+        "-I${workspaceRoot}/include/Timer",
+    ]
 }

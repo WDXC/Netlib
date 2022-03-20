@@ -26,7 +26,7 @@ EpollPoller::~EpollPoller() {
 void EpollPoller::update_channel(Channel* channel) {
     // 增加或删除
     const int index = channel->index();
-    LOG_INFO("func = %s fd = %d events = %d index = %d \n", 
+    LOG_INFO("func = %s fd = %d events = %d index = %d", 
              __FUNCTION__, channel->get_fd(), 
              channel->get_events(), index);
     if (index == k_new || index == k_deleted) {
@@ -77,13 +77,14 @@ void EpollPoller::remove_channel(Channel* channel) {
 }
 
 TimeStamp EpollPoller::poll(int timeout, ChannelList* active_channels) {
+    LOG_INFO("fd total count %d", channel_.size());
     int events_num = epoll_wait(epollfd_, &*events_.begin(), 
                                 static_cast<int>(events_.size()),timeout);
     int save_errno = errno;
 
     TimeStamp now(TimeStamp::now());
     if (events_num > 0) {
-        // LOG_INFO("%d events happened \n", events_num);
+        LOG_INFO("%d events happended", events_num);
         fill_active_channel(events_num, active_channels);
         if (events_num == events_.size()) {
             events_.resize(events_.size() * 2);
