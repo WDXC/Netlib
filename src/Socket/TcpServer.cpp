@@ -1,31 +1,29 @@
 #include "TcpServer.hpp"
+
 #include <assert.h>
 #include <string.h>
 
 namespace check {
-    EventLoop* CheckLoopNotNull(EventLoop* loop) {
-        if (loop == nullptr) {
-            LOG_ERROR("%s:%s:%d mainloop is null \n", __FILE__, __FUNCTION__, __LINE__);
-        }
-        return loop;
+EventLoop* CheckLoopNotNull(EventLoop* loop) {
+    if (loop == nullptr) {
+        LOG_ERROR("%s:%s:%d mainloop is null \n", __FILE__, __FUNCTION__, __LINE__);
     }
+    return loop;
 }
-
+}  // namespace check
 
 TcpServer::TcpServer(EventLoop* loop, const InetAddress& listenaddr,
-                     const std::string& name, Option option) : 
-    loop_(check::CheckLoopNotNull(loop)),
-    ip_port(listenaddr.get_ip_port()),
-    name_(name),
-    acceptor_(new Acceptor(loop, listenaddr, option=k_reuse_port)),
-    thread_pool_(new EventLoopThreadPool(loop, name_)),
-    connectionCallback_(),
-    messageCallback_(),
-    next_conn_id_(1),
-    started_(0) {
+                     const std::string& name, Option option) : loop_(check::CheckLoopNotNull(loop)),
+                                                               ip_port(listenaddr.get_ip_port()),
+                                                               name_(name),
+                                                               acceptor_(new Acceptor(loop, listenaddr, option = k_reuse_port)),
+                                                               thread_pool_(new EventLoopThreadPool(loop, name_)),
+                                                               connectionCallback_(),
+                                                               messageCallback_(),
+                                                               next_conn_id_(1),
+                                                               started_(0) {
     acceptor_->setNewConnectionCallback(std::bind(&TcpServer::new_connection, this, std::placeholders::_1, std::placeholders::_2));
 }
-
 
 TcpServer::~TcpServer() {
     loop_->assertInLoopThread();
@@ -49,7 +47,7 @@ void TcpServer::start() {
     }
 }
 
-void TcpServer::new_connection (int sockfd, const InetAddress& peerAddr) {
+void TcpServer::new_connection(int sockfd, const InetAddress& peerAddr) {
     loop_->assertInLoopThread();
     EventLoop* ioloop = thread_pool_->appendThread();
 
@@ -63,7 +61,7 @@ void TcpServer::new_connection (int sockfd, const InetAddress& peerAddr) {
     sockaddr_in local;
     bzero(&local, sizeof(local));
     socklen_t addrlen = sizeof(local);
-    if (::getsockname(sockfd, (sockaddr*)& local, &addrlen) < 0) {
+    if (::getsockname(sockfd, (sockaddr*)&local, &addrlen) < 0) {
         LOG_ERROR("new connection get localaddr error\n");
     }
     InetAddress localaddr(local);
@@ -80,15 +78,16 @@ void TcpServer::new_connection (int sockfd, const InetAddress& peerAddr) {
     ioloop->run_in_loop(std::bind(&TcpConnection::establish_connect, conn));
 }
 
-void TcpServer::remove_connection (const TcpConnectionPtr& conn) {
+void TcpServer::remove_connection(const TcpConnectionPtr& conn) {
     loop_->run_in_loop(std::bind(&TcpServer::remove_connection_inLoop, this, conn));
 }
 
 void TcpServer::remove_connection_inLoop(const TcpConnectionPtr& conn) {
     loop_->assertInLoopThread();
     LOG_INFO("tcp server::remove connection in loop[%s]-connection[%s]\n", name_.c_str(), conn->get_name().c_str());
-    
-    connections_.erase(conn->get_name());
+    int n = connections_.erase(conn->get_name());
+    (void)n;
+    assert(n == 1);
     EventLoop* ioloop = conn->get_loop();
     ioloop->queue_in_loop(std::bind(&TcpConnection::destory_connect, conn));
 }

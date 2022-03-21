@@ -2,11 +2,12 @@
 
 #include <assert.h>
 #include <sys/epoll.h>
+
 #include <sstream>
 
 #include "EventLoop.hpp"
-#include "SocketOps.hpp"
 #include "Log.hpp"
+#include "SocketOps.hpp"
 
 const int Channel::k_none_event_ = 0;
 const int Channel::k_read_event_ = EPOLLIN | EPOLLPRI;
@@ -24,6 +25,11 @@ Channel::Channel(EventLoop* loop, int fd) : loop_(loop),
 }
 
 Channel::~Channel() {
+    assert(!eventHandling_);
+    assert(!addedToLoop_);
+    if (loop_->is_in_loopThread()) {
+        assert(!loop_->has_channel(this));
+    }
 }
 
 void Channel::handle_event(TimeStamp receive_time) {
@@ -42,16 +48,15 @@ void Channel::tie(const std::shared_ptr<void>& obj) {
     tied_ = true;
 }
 
-void Channel::remove() {
-    if (is_none_event()) {
-        addedToLoop_ = false;
-        loop_->remove_channel(this);
-    }
-}
-
 void Channel::update() {
     addedToLoop_ = true;
     loop_->update_channel(this);
+}
+
+void Channel::remove() {
+    assert(is_none_event());
+    addedToLoop_ = false;
+    loop_->remove_channel(this);
 }
 
 std::string Channel::reventToString() const {

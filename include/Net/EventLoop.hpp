@@ -66,7 +66,7 @@ class EventLoop : NoCopyable {
 
     // 判断eventloop对象是否在自己的线程中
     bool is_in_loopThread() const {
-        return threadId_ == CurrentThread::tid();
+        return threadId_ == syscall(SYS_gettid);
     }
 
    private:

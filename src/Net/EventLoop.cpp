@@ -48,8 +48,8 @@ EventLoop::EventLoop() : looping_(false),
 EventLoop::~EventLoop() {
     wakeup_channel_->dis_enable_all();
     wakeup_channel_->remove();
-    ::close(wakeup_fd);
-    t_loop_in_thisThread = nullptr;
+    sockets::close(wakeup_fd);
+    t_loop_in_thisThread = NULL;
 }
 
 void EventLoop::loop() {
@@ -64,12 +64,12 @@ void EventLoop::loop() {
         active_channels.clear();
         poll_return_time_ = poller_->poll(k_poll_timeout, &active_channels);
         ++iteration_;
+        printActiveChannel();
         eventHandling_ = true;
         for (Channel* channel : active_channels) {
             currentActiveChannel_ = channel;
             channel->handle_event(poll_return_time_);
         }
-
         currentActiveChannel_ = NULL;
         eventHandling_ = false;
         do_pending_fucntor();
@@ -159,12 +159,11 @@ void EventLoop::wakeup() {
 }
 
 void EventLoop::handle_read() {
-    // uint64_t one = 1;
-    // ssize_t n = sockets::read(wakeup_fd, &one, sizeof(one));
-    // if (n != sizeof(one)) {
-    //     LOG_ERROR("EventLoop::handleRead() reads %d bytes instead of 8");
-    // }
-    wakeup();
+    uint64_t one = 1;
+    ssize_t n = sockets::read(wakeup_fd, &one, sizeof(one));
+    if (n != sizeof(one)) {
+        LOG_ERROR("EventLoop::handleRead() reads %d bytes instead of 8");
+    }
 }
 
 void EventLoop::do_pending_fucntor() {

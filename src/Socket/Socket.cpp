@@ -47,7 +47,10 @@ void Socket::set_reuseAddr(bool on) const {
 
 void Socket::set_reusePort(bool on) const {
     int optval = on ? 1 : 0;
-    ::setsockopt(m_sockfd, SOL_SOCKET, SO_REUSEPORT, &optval, sizeof(optval));
+    int ret = ::setsockopt(m_sockfd, SOL_SOCKET, SO_REUSEPORT, &optval, sizeof(optval));
+    if (ret < 0 && on) {
+        LOG_ERROR("SO_REUSEPORT failed");
+    }
 }
 
 void Socket::set_keepAlive(bool on) const {

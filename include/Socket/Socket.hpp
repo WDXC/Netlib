@@ -29,7 +29,7 @@ class Socket : NoCopyable {
         // 保持长连接
         void set_keepAlive(bool on) const ;
     private:
-        int m_sockfd;
+        const int m_sockfd;
 };
 
 

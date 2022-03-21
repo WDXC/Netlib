@@ -1,1 +1,0 @@
-/usr/bin/c++   -O0 -Wall -g -ggdb   CMakeFiles/Tcpclient.dir/example/Tcpclient_demo.cpp.o  -o bin/Tcpclient  src/libNet.a -lpthread -lrt -lmysqlclient 

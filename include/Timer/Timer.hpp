@@ -8,6 +8,7 @@
 #include <functional>
 #include <atomic>
 #include "../Base/NonCopyable.hpp"
+#include "../Base/Atomic.hpp"
 #include "TimeStamp.hpp"
 
 class Timer : NoCopyable {
@@ -22,8 +23,8 @@ class Timer : NoCopyable {
         int64_t sequence() const {
             return sequence_;
         }
-        int64_t numCreated() {
-            return s_numCreated_;
+        static int64_t numCreated() {
+            return s_numCreated_.get();
         }
 
     private:
@@ -33,7 +34,7 @@ class Timer : NoCopyable {
         const bool m_repeat;
         const int64_t sequence_;
 
-        std::atomic_int64_t s_numCreated_;
+        static AtomicInt64 s_numCreated_;
 };
 
 #endif
