@@ -9,11 +9,11 @@ fi
 cmake .. > /dev/null
 
 if [ ! -d "bin" ]; then
-	make -j 4 > /dev/null
+	make -j 8 > /dev/null
 	echo "make Successfully"
 else 
 	make clean
-	make -j 4 > /dev/null
+	make -j 8 > /dev/null
 	echo "make Successfully"
 fi
 

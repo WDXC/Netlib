@@ -11,11 +11,11 @@
 class Channel;
 class EventLoop;
 
+
+using NewConnectionCallback = std::function<void(int sockfd)>;
+
 class Connector : NoCopyable,
                   public std::enable_shared_from_this<Connector> {
-   public:
-    using NewConnectionCallback = std::function<void(int sockfd)>;
-
    public:
     Connector(EventLoop* loop, const InetAddress& serverAddr);
     ~Connector();

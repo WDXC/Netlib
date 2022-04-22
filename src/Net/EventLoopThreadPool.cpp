@@ -22,9 +22,9 @@ void EventLoopThreadPool::start(const ThreadInitCallback& cb) {
         for (int i = 0; i < thread_nums_; ++i) {
             char buffer[name_.size() + 32];
             buffer[name_.size() + 32] = {0};
-            EventLoopThread* t = new EventLoopThread(cb);
-            thread_.push_back(std::unique_ptr<EventLoopThread>(t));
-            loops_.push_back(t->startLoop());
+            EventLoopThread* thr = new EventLoopThread(cb);
+            thread_.push_back(std::unique_ptr<EventLoopThread>(thr));
+            loops_.push_back(thr->startLoop());
         }
     }
 }

@@ -1,6 +1,7 @@
 #include "Channel.hpp"
 
 #include <assert.h>
+#include <poll.h>
 #include <sys/epoll.h>
 
 #include <sstream>
@@ -10,18 +11,19 @@
 #include "SocketOps.hpp"
 
 const int Channel::k_none_event_ = 0;
-const int Channel::k_read_event_ = EPOLLIN | EPOLLPRI;
-const int Channel::k_write_event_ = EPOLLOUT;
+const int Channel::k_read_event_ = POLLIN | POLLPRI;
+const int Channel::k_write_event_ = POLLOUT;
 
-Channel::Channel(EventLoop* loop, int fd) : loop_(loop),
-                                            fd_(fd),
-                                            events_(0),
-                                            real_events_(0),
-                                            index_(-1),
-                                            eventHandling_(false),
-                                            addedToLoop_(false),
-                                            logHup_(true),
-                                            tied_(false) {
+Channel::Channel(EventLoop* loop, int fd)
+    : loop_(loop),
+      fd_(fd),
+      events_(0),
+      real_events_(0),
+      index_(-1),
+      eventHandling_(false),
+      addedToLoop_(false),
+      logHup_(true),
+      tied_(false) {
 }
 
 Channel::~Channel() {
@@ -70,18 +72,21 @@ std::string Channel::eventsToString() const {
 std::string Channel::eventToString(int fd, int ev) {
     std::ostringstream oss;
     oss << fd << ": ";
-    if (ev & EPOLLIN)
+    if (ev & POLLIN)
         oss << "IN ";
-    if (ev & EPOLLPRI)
+    if (ev & POLLPRI)
         oss << "PRI ";
-    if (ev & EPOLLOUT)
+    if (ev & POLLOUT)
         oss << "OUT ";
-    if (ev & EPOLLHUP)
+    if (ev & POLLHUP)
         oss << "HUP ";
-    if (ev & EPOLLRDHUP)
+    if (ev & POLLRDHUP)
         oss << "RDHUP ";
-    if (ev & EPOLLERR)
+    if (ev & POLLERR)
         oss << "ERR ";
+    if (ev & POLLNVAL)
+        oss << "NVAL";
+
     return oss.str();
 }
 
@@ -91,7 +96,7 @@ void Channel::handle_event_withGuard(TimeStamp receive_time) {
     LOG_DEBUG("%s", reventToString().c_str());
 
     // 连接被挂起
-    if ((real_events_ & EPOLLHUP) && !(real_events_ & EPOLLIN)) {
+    if ((real_events_ & POLLHUP) && !(real_events_ & POLLIN)) {
         if (logHup_) {
             LOG_WARN("fd = %d Channel::handle_event() EPOLLHUP", fd_);
         }
@@ -100,22 +105,26 @@ void Channel::handle_event_withGuard(TimeStamp receive_time) {
         }
     }
 
+    if (real_events_ & POLLNVAL) {
+        LOG_ERROR("fd = %d Channel::handle_event() POLLNVAL", fd_);
+    }
+
     // 发生错误
-    if (real_events_ & EPOLLERR) {
+    if (real_events_ & (POLLERR | POLLNVAL)) {
         if (errorCallback_) {
             errorCallback_();
         }
     }
 
     // 读事件
-    if (real_events_ & (EPOLLIN | EPOLLPRI)) {
+    if (real_events_ & (POLLIN | POLLPRI | POLLRDHUP)) {
         if (readCallback_) {
             readCallback_(receive_time);
         }
     }
 
     // 写事件
-    if (real_events_ & EPOLLOUT) {
+    if (real_events_ & POLLOUT) {
         if (writeCallback_) {
             writeCallback_();
         }

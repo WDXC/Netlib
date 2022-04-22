@@ -14,12 +14,11 @@ int main(int argc, char* argv[])
 {
   g_LogMgr::instance()->init("./log", 5000000, 1000);
   EventLoop loop;
-  InetAddress serverAddr("127.0.0.1", 2); // no such server
+  InetAddress serverAddr("120.241.186.196", 25); // no such server
   TcpClient client(&loop, serverAddr, "TcpClient");
   g_client = &client;
   loop.runAfter(0.0, timeout);
   loop.runAfter(1.0, std::bind(&EventLoop::quit, &loop));
   client.connect();
-  CurrentThread::sleepUsec(100 * 1000);
   loop.loop();
 }

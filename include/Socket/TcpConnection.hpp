@@ -100,6 +100,8 @@ class TcpConnection : NoCopyable,
             return context_;
         }
 
+        bool isReading() const {return reading_;}
+
 				boost::any* getMutableContext() {
             return &context_;
         }

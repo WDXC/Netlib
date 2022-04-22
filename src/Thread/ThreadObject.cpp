@@ -42,6 +42,7 @@ void ThreadObject::cancel() {
 void* ThreadObject::run (void* obj) {
     ThreadObject* ptr = static_cast<ThreadObject*> (obj);
     ptr->m_func();
+    delete ptr;
     return nullptr;
 }
 

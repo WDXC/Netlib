@@ -10,11 +10,12 @@
 
 const int Connector::kMaxRetryDelayMs;
 
-Connector::Connector(EventLoop *loop, const InetAddress &serverAddr) : loop_(loop),
-                                                                       serverAddr_(serverAddr),
-                                                                       connect_(false),
-                                                                       state_(kDisconnected),
-                                                                       retryDelayMs_(kInitRetryDelayMs) {
+Connector::Connector(EventLoop *loop, const InetAddress &serverAddr)
+    : loop_(loop),
+      serverAddr_(serverAddr),
+      connect_(false),
+      state_(kDisconnected),
+      retryDelayMs_(kInitRetryDelayMs) {
     LOG_DEBUG("ctor[%p]", this);
 }
 
@@ -75,6 +76,7 @@ void Connector::connect() {
         case EISCONN:
             connecting(sockfd);
             break;
+
         case EAGAIN:
         case EADDRINUSE:
         case EADDRNOTAVAIL:
@@ -82,6 +84,7 @@ void Connector::connect() {
         case ENETUNREACH:
             retry(sockfd);
             break;
+
         case EACCES:
         case EPERM:
         case EAFNOSUPPORT:
@@ -92,6 +95,7 @@ void Connector::connect() {
             LOG_ERROR("connector error in Connector::startInLoop %d ", saveErrno);
             sockets::close(sockfd);
             break;
+
         default:
             LOG_ERROR("Unexpected error in Connector::startInLoop %d", saveErrno);
             sockets::close(sockfd);
@@ -119,6 +123,7 @@ void Connector::connecting(int sockfd) {
 
 int Connector::removeAndResetChannel() {
     channel_->dis_enable_all();
+    LOG_ERROR("Failed in here");
     channel_->remove();
     int sockfd = channel_->get_fd();
     loop_->queue_in_loop(std::bind(&Connector::resetChannel, this));
@@ -142,13 +147,10 @@ void Connector::handleWrite() {
             LOG_WARN("Connector::handleWrite - Self Connect");
             retry(sockfd);
         } else {
-            LOG_INFO("arrive 1");
             setState(kConnected);
             if (connect_) {
-                LOG_INFO("arrive 2");
                 newConnectionCallback_(sockfd);
             } else {
-                LOG_INFO("arrive 3");
                 sockets::close(sockfd);
             }
         }
@@ -167,6 +169,7 @@ void Connector::handleError() {
         retry(sockfd);
     }
 }
+
 void Connector::retry(int sockfd) {
     sockets::close(sockfd);
     setState(kDisconnected);

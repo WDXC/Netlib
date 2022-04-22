@@ -17,14 +17,15 @@ void removeConnector(const ConnectorPtr& Connector) {
 
 TcpClient::TcpClient(EventLoop* loop,
                      const InetAddress& serverAddr,
-                     const std::string& nameArg) : loop_(loop),
-                                                   connector_(new Connector(loop, serverAddr)),
-                                                   name_(nameArg),
-                                                   retry_(false),
-                                                   connect_(true),
-                                                   nextConnId_(1) {
-    connector_->setNewConnectionCallback(
-        std::bind(&TcpClient::newConnection, this, std::placeholders::_1));
+                     const std::string& nameArg)
+    : loop_(loop),
+      connector_(new Connector(loop, serverAddr)),
+      name_(nameArg),
+      retry_(false),
+      connect_(true),
+      nextConnId_(1) {
+    connector_->setNewConnectionCallback(std::bind(
+        &TcpClient::newConnection, this, std::placeholders::_1));
     LOG_INFO("TcpClient::TcpClient[%s] - connector %p", name_.c_str(), &connector_)
 }
 

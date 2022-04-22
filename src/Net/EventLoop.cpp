@@ -4,8 +4,9 @@
 #include <fcntl.h>
 #include <sys/eventfd.h>
 #include <unistd.h>
-#include <functional>
+
 #include <algorithm>
+#include <functional>
 
 #include "Log.hpp"
 #include "SocketOps.hpp"
@@ -30,7 +31,7 @@ EventLoop::EventLoop() : looping_(false),
                          threadId_(syscall(SYS_gettid)),
                          poller_(Poller::new_deafultPoller(this)),
                          timerQueue_(new TimerQueue(this)),
-                         wakeup_fd(CreateEventfd()),
+                         wakeup_fd(::CreateEventfd()),
                          wakeup_channel_(new Channel(this, wakeup_fd)),
                          currentActiveChannel_(NULL),
                          iteration_(0) {
@@ -107,8 +108,6 @@ void EventLoop::queue_in_loop(Functor cb) {
     }
 }
 
-
-
 void EventLoop::abortNoInLoopThread() {
     LOG_INFO("EventLoop abortNoInLoopThread");
 }
@@ -124,7 +123,7 @@ void EventLoop::remove_channel(Channel* channel) {
     assert(channel->ower_loop() == this);
     assertInLoopThread();
     if (eventHandling_) {
-        assert(currentActiveChannel_ == channel || 
+        assert(currentActiveChannel_ == channel ||
                std::find(active_channels.begin(), active_channels.end(), channel) == active_channels.end());
     }
     poller_->remove_channel(channel);
@@ -181,7 +180,7 @@ void EventLoop::do_pending_fucntor() {
     calling_pending_functors_ = false;
 }
 
-void EventLoop::printActiveChannel () const {
+void EventLoop::printActiveChannel() const {
     for (const Channel* channel : active_channels) {
         LOG_DEBUG("{ %s }", channel->reventToString().c_str());
     }

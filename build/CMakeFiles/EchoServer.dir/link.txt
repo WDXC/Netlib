@@ -1,0 +1,1 @@
+/usr/bin/c++   -O0 -Wall -g -ggdb   CMakeFiles/EchoServer.dir/example/EchoServer_test.cpp.o  -o bin/EchoServer  src/libNet.a -lpthread -lrt -lmysqlclient 

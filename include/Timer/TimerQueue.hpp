@@ -25,7 +25,6 @@ class TimerQueue : NoCopyable {
     explicit TimerQueue(EventLoop* loop);
     ~TimerQueue();
 
-    void addTimer_void(TimerCallback cb, TimeStamp when, double interval);
     TimerId addTimer(TimerCallback cb, TimeStamp when, double interval);
     void cancel(TimerId timerId);
 
